@@ -107,6 +107,28 @@ def sync_detailed(
     `422 unsupported_country`, exactly as on the create, and the store keeps
     the address it had.
 
+    `add_ons` switches the store's paid add-ons on and off. On Listo's
+    self-serve pricing, the stores your account created itself can hold
+    add-ons; any other store answers `422 add_ons_unavailable`. Send only the keys you are changing; a
+    key you
+    leave out is untouched. Switching a pay-per-use add-on on or off
+    (`customer_whatsapp`, `card_payments`) is free and immediate, and it is
+    charged afterwards, per use. Switching the monthly add-on `ratings` on
+    charges its first month now, from your balance, or from your saved card
+    if you chose card, and the add-on is on only once that month is paid. If
+    it cannot be paid the request is refused with `402
+    insufficient_balance`, nothing is charged, the add-on stays off and none
+    of the other fields in the same request is saved. Switching a monthly
+    add-on off keeps it
+    running until the end of the month already paid. A card payment the bank
+    has not answered yet answers `409 charge_in_flight`; repeat the request
+    shortly. `wallet` and `full_console` cannot be switched on: they read
+    `available: false`, and asking to switch either on is refused with `422
+    validation_failed` and `param: "add_ons.wallet"` or
+    `"add_ons.full_console"`, before anything is changed or charged.
+    Switching them off is accepted. See
+    [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
+
     Args:
         id (str):
         body (UpdateStoreRequest | Unset): The fields to change. Send only the ones you are
@@ -164,6 +186,28 @@ def sync(
     `422 unsupported_country`, exactly as on the create, and the store keeps
     the address it had.
 
+    `add_ons` switches the store's paid add-ons on and off. On Listo's
+    self-serve pricing, the stores your account created itself can hold
+    add-ons; any other store answers `422 add_ons_unavailable`. Send only the keys you are changing; a
+    key you
+    leave out is untouched. Switching a pay-per-use add-on on or off
+    (`customer_whatsapp`, `card_payments`) is free and immediate, and it is
+    charged afterwards, per use. Switching the monthly add-on `ratings` on
+    charges its first month now, from your balance, or from your saved card
+    if you chose card, and the add-on is on only once that month is paid. If
+    it cannot be paid the request is refused with `402
+    insufficient_balance`, nothing is charged, the add-on stays off and none
+    of the other fields in the same request is saved. Switching a monthly
+    add-on off keeps it
+    running until the end of the month already paid. A card payment the bank
+    has not answered yet answers `409 charge_in_flight`; repeat the request
+    shortly. `wallet` and `full_console` cannot be switched on: they read
+    `available: false`, and asking to switch either on is refused with `422
+    validation_failed` and `param: "add_ons.wallet"` or
+    `"add_ons.full_console"`, before anything is changed or charged.
+    Switching them off is accepted. See
+    [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
+
     Args:
         id (str):
         body (UpdateStoreRequest | Unset): The fields to change. Send only the ones you are
@@ -215,6 +259,28 @@ async def asyncio_detailed(
     A `street` that moves the store to another country is refused with
     `422 unsupported_country`, exactly as on the create, and the store keeps
     the address it had.
+
+    `add_ons` switches the store's paid add-ons on and off. On Listo's
+    self-serve pricing, the stores your account created itself can hold
+    add-ons; any other store answers `422 add_ons_unavailable`. Send only the keys you are changing; a
+    key you
+    leave out is untouched. Switching a pay-per-use add-on on or off
+    (`customer_whatsapp`, `card_payments`) is free and immediate, and it is
+    charged afterwards, per use. Switching the monthly add-on `ratings` on
+    charges its first month now, from your balance, or from your saved card
+    if you chose card, and the add-on is on only once that month is paid. If
+    it cannot be paid the request is refused with `402
+    insufficient_balance`, nothing is charged, the add-on stays off and none
+    of the other fields in the same request is saved. Switching a monthly
+    add-on off keeps it
+    running until the end of the month already paid. A card payment the bank
+    has not answered yet answers `409 charge_in_flight`; repeat the request
+    shortly. `wallet` and `full_console` cannot be switched on: they read
+    `available: false`, and asking to switch either on is refused with `422
+    validation_failed` and `param: "add_ons.wallet"` or
+    `"add_ons.full_console"`, before anything is changed or charged.
+    Switching them off is accepted. See
+    [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
 
     Args:
         id (str):
@@ -270,6 +336,28 @@ async def asyncio(
     A `street` that moves the store to another country is refused with
     `422 unsupported_country`, exactly as on the create, and the store keeps
     the address it had.
+
+    `add_ons` switches the store's paid add-ons on and off. On Listo's
+    self-serve pricing, the stores your account created itself can hold
+    add-ons; any other store answers `422 add_ons_unavailable`. Send only the keys you are changing; a
+    key you
+    leave out is untouched. Switching a pay-per-use add-on on or off
+    (`customer_whatsapp`, `card_payments`) is free and immediate, and it is
+    charged afterwards, per use. Switching the monthly add-on `ratings` on
+    charges its first month now, from your balance, or from your saved card
+    if you chose card, and the add-on is on only once that month is paid. If
+    it cannot be paid the request is refused with `402
+    insufficient_balance`, nothing is charged, the add-on stays off and none
+    of the other fields in the same request is saved. Switching a monthly
+    add-on off keeps it
+    running until the end of the month already paid. A card payment the bank
+    has not answered yet answers `409 charge_in_flight`; repeat the request
+    shortly. `wallet` and `full_console` cannot be switched on: they read
+    `available: false`, and asking to switch either on is refused with `422
+    validation_failed` and `param: "add_ons.wallet"` or
+    `"add_ons.full_console"`, before anything is changed or charged.
+    Switching them off is accepted. See
+    [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
 
     Args:
         id (str):

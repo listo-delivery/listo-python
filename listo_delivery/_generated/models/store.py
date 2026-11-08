@@ -12,6 +12,7 @@ from ..models.store_billing import StoreBilling
 from ..models.store_default_fee_split_mode import StoreDefaultFeeSplitMode
 
 if TYPE_CHECKING:
+    from ..models.store_add_ons_type_0 import StoreAddOnsType0
     from ..models.store_plan_type_0 import StorePlanType0
 
 
@@ -71,7 +72,9 @@ class Store:
                 `percent` mode, and never null in either amount mode. Read-only.
             access_tier (StoreAccessTier): How much of Listo the store itself uses. An `api_only` store's
                 deliveries spend your balance, and a `wallet` or `full` store's
-                spend its own; `billing` says which. Writable on create and update,
+                spend its own; `billing` says which. Writable on create and update
+                (on a store your account creates, `wallet` and `full` are not chosen
+                here),
                 and always `api_only` on a test store. A live store of an account
                 whose restaurants pay their own Plan Listo cannot be `api_only`: it
                 has no console to buy a plan from, so a create or an update that
@@ -98,6 +101,13 @@ class Store:
                 object every
                 key is present, and the ones that do not apply are `null`. See
                 [Plan and billing](https://docs.listo.delivery/en/guides/plan-and-billing).
+            add_ons (None | StoreAddOnsType0): The store's paid add-ons, or `null` when the store cannot hold any.
+                On Listo's self-serve pricing, the stores your account created itself
+                can hold add-ons; any other store shows `add_ons: null`.
+                When it is an object it has all five keys, each with every field.
+                Switch them on and off with `PATCH /v1/stores/{id}`. `wallet` and
+                `full_console` read `available: false` and cannot be switched on. See
+                [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
     """
 
     id: str
@@ -119,9 +129,11 @@ class Store:
     test: bool
     created_at: datetime.datetime
     plan: None | StorePlanType0
+    add_ons: None | StoreAddOnsType0
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        from ..models.store_add_ons_type_0 import StoreAddOnsType0
         from ..models.store_plan_type_0 import StorePlanType0
 
         id = self.id
@@ -172,6 +184,12 @@ class Store:
         else:
             plan = self.plan
 
+        add_ons: dict[str, Any] | None
+        if isinstance(self.add_ons, StoreAddOnsType0):
+            add_ons = self.add_ons.to_dict()
+        else:
+            add_ons = self.add_ons
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -195,6 +213,7 @@ class Store:
                 "test": test,
                 "created_at": created_at,
                 "plan": plan,
+                "add_ons": add_ons,
             }
         )
 
@@ -202,6 +221,7 @@ class Store:
 
     @classmethod
     def from_dict(cls, src_dict: Mapping[str, Any]) -> Self:
+        from ..models.store_add_ons_type_0 import StoreAddOnsType0
         from ..models.store_plan_type_0 import StorePlanType0
 
         d = dict(src_dict)
@@ -290,6 +310,21 @@ class Store:
 
         plan = _parse_plan(d.pop("plan"))
 
+        def _parse_add_ons(data: object) -> None | StoreAddOnsType0:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                add_ons_type_0 = StoreAddOnsType0.from_dict(data)
+
+                return add_ons_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(None | StoreAddOnsType0, data)
+
+        add_ons = _parse_add_ons(d.pop("add_ons"))
+
         store = cls(
             id=id,
             external_id=external_id,
@@ -310,6 +345,7 @@ class Store:
             test=test,
             created_at=created_at,
             plan=plan,
+            add_ons=add_ons,
         )
 
         store.additional_properties = d

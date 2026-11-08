@@ -140,6 +140,17 @@ def sync_detailed(
       what a `full` store's plan includes, charged to you with that store's
       plan. Negative.
 
+    Three more are a store's add-ons, paid from your balance:
+
+    - `add_on_charge` is one month of the Food rating add-on (`ratings`),
+      IVA included. Negative, and tied to the
+      store. A month paid by card writes no row, because it never touched
+      the balance.
+    - `customer_whatsapp_use` is the WhatsApp updates add-on's charge for
+      one delivered trip. Negative, and tied to the order it belongs to.
+    - `card_payments_use` is the card payments add-on's charge for one
+      paid card payment. Negative, and tied to the order it belongs to.
+
     `store_id` names the store a movement belongs to, on every row: the
     store of the order, or the store whose plan was paid. It is `null` when
     a movement belongs to no single store, such as a top-up or a withdrawal.
@@ -246,6 +257,17 @@ def sync(
       what a `full` store's plan includes, charged to you with that store's
       plan. Negative.
 
+    Three more are a store's add-ons, paid from your balance:
+
+    - `add_on_charge` is one month of the Food rating add-on (`ratings`),
+      IVA included. Negative, and tied to the
+      store. A month paid by card writes no row, because it never touched
+      the balance.
+    - `customer_whatsapp_use` is the WhatsApp updates add-on's charge for
+      one delivered trip. Negative, and tied to the order it belongs to.
+    - `card_payments_use` is the card payments add-on's charge for one
+      paid card payment. Negative, and tied to the order it belongs to.
+
     `store_id` names the store a movement belongs to, on every row: the
     store of the order, or the store whose plan was paid. It is `null` when
     a movement belongs to no single store, such as a top-up or a withdrawal.
@@ -346,6 +368,17 @@ async def asyncio_detailed(
     - `plan_extra_charge` is the WhatsApp assistant's conversations past
       what a `full` store's plan includes, charged to you with that store's
       plan. Negative.
+
+    Three more are a store's add-ons, paid from your balance:
+
+    - `add_on_charge` is one month of the Food rating add-on (`ratings`),
+      IVA included. Negative, and tied to the
+      store. A month paid by card writes no row, because it never touched
+      the balance.
+    - `customer_whatsapp_use` is the WhatsApp updates add-on's charge for
+      one delivered trip. Negative, and tied to the order it belongs to.
+    - `card_payments_use` is the card payments add-on's charge for one
+      paid card payment. Negative, and tied to the order it belongs to.
 
     `store_id` names the store a movement belongs to, on every row: the
     store of the order, or the store whose plan was paid. It is `null` when
@@ -450,6 +483,17 @@ async def asyncio(
     - `plan_extra_charge` is the WhatsApp assistant's conversations past
       what a `full` store's plan includes, charged to you with that store's
       plan. Negative.
+
+    Three more are a store's add-ons, paid from your balance:
+
+    - `add_on_charge` is one month of the Food rating add-on (`ratings`),
+      IVA included. Negative, and tied to the
+      store. A month paid by card writes no row, because it never touched
+      the balance.
+    - `customer_whatsapp_use` is the WhatsApp updates add-on's charge for
+      one delivered trip. Negative, and tied to the order it belongs to.
+    - `card_payments_use` is the card payments add-on's charge for one
+      paid card payment. Negative, and tied to the order it belongs to.
 
     `store_id` names the store a movement belongs to, on every row: the
     store of the order, or the store whose plan was paid. It is `null` when

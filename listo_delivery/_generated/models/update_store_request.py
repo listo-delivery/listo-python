@@ -1,13 +1,17 @@
 from __future__ import annotations
 
 from collections.abc import Mapping
-from typing import Any, Self, TypeVar, cast
+from typing import TYPE_CHECKING, Any, Self, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
 from ..models.update_store_request_access_tier import UpdateStoreRequestAccessTier
 from ..types import UNSET, Unset
+
+if TYPE_CHECKING:
+    from ..models.update_store_request_add_ons import UpdateStoreRequestAddOns
+
 
 T = TypeVar("T", bound="UpdateStoreRequest")
 
@@ -27,9 +31,20 @@ class UpdateStoreRequest:
             them.
         timezone (str | Unset): An IANA time zone name.
         default_business_fee_share (int | Unset):
-        access_tier (UpdateStoreRequestAccessTier | Unset):
+        access_tier (UpdateStoreRequestAccessTier | Unset): What the store gets besides the API. On a store your account
+            created, `wallet` and `full` are not chosen here, so a request that
+            asks for either tier is refused with `422 validation_failed` and
+            `param: "access_tier"`. `api_only` is always accepted.
         markup_cents (int | Unset):
         external_id (None | str | Unset): Your own reference for this location. Null clears it.
+        add_ons (UpdateStoreRequestAddOns | Unset): Add-ons to switch on (`true`) or off (`false`). Send only the ones
+            you are changing: a key you leave out is untouched, and this never
+            replaces the set. `wallet` and `full_console` cannot be switched
+            on: `true` for either is refused with `422 validation_failed` and
+            `param: "add_ons.wallet"` or `"add_ons.full_console"`, and `false`
+            is accepted. Each value must be a JSON boolean; the string
+            `"true"`, `1` and `null` are refused with `422 validation_failed`
+            and `param: "add_ons.<key>"`, and so is a key that is not an add-on.
     """
 
     name: str | Unset = UNSET
@@ -44,6 +59,7 @@ class UpdateStoreRequest:
     access_tier: UpdateStoreRequestAccessTier | Unset = UNSET
     markup_cents: int | Unset = UNSET
     external_id: None | str | Unset = UNSET
+    add_ons: UpdateStoreRequestAddOns | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -81,6 +97,10 @@ class UpdateStoreRequest:
         else:
             external_id = self.external_id
 
+        add_ons: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.add_ons, Unset):
+            add_ons = self.add_ons.to_dict()
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update({})
@@ -108,11 +128,15 @@ class UpdateStoreRequest:
             field_dict["markup_cents"] = markup_cents
         if external_id is not UNSET:
             field_dict["external_id"] = external_id
+        if add_ons is not UNSET:
+            field_dict["add_ons"] = add_ons
 
         return field_dict
 
     @classmethod
     def from_dict(cls, src_dict: Mapping[str, Any]) -> Self:
+        from ..models.update_store_request_add_ons import UpdateStoreRequestAddOns
+
         d = dict(src_dict)
         name = d.pop("name", UNSET)
 
@@ -157,6 +181,13 @@ class UpdateStoreRequest:
 
         external_id = _parse_external_id(d.pop("external_id", UNSET))
 
+        _add_ons = d.pop("add_ons", UNSET)
+        add_ons: UpdateStoreRequestAddOns | Unset
+        if isinstance(_add_ons, Unset):
+            add_ons = UNSET
+        else:
+            add_ons = UpdateStoreRequestAddOns.from_dict(_add_ons)
+
         update_store_request = cls(
             name=name,
             phone=phone,
@@ -170,6 +201,7 @@ class UpdateStoreRequest:
             access_tier=access_tier,
             markup_cents=markup_cents,
             external_id=external_id,
+            add_ons=add_ons,
         )
 
         update_store_request.additional_properties = d

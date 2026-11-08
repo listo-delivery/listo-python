@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "listo-delivery"
-version = "0.1.1"
+version = "0.2.0"
 description = "Official Python client for the Listo Delivery API."
 readme = "README.md"
 # The generated models use typing.Self and StrEnum, which arrived in 3.11.

@@ -128,6 +128,10 @@ from .send_test_webhook_request import SendTestWebhookRequest
 from .send_test_webhook_request_type import SendTestWebhookRequestType
 from .store import Store
 from .store_access_tier import StoreAccessTier
+from .store_add_on import StoreAddOn
+from .store_add_on_charged import StoreAddOnCharged
+from .store_add_on_status import StoreAddOnStatus
+from .store_add_ons_type_0 import StoreAddOnsType0
 from .store_balance import StoreBalance
 from .store_balance_billing import StoreBalanceBilling
 from .store_balance_currency import StoreBalanceCurrency
@@ -143,6 +147,7 @@ from .store_updated_event import StoreUpdatedEvent
 from .store_updated_event_type import StoreUpdatedEventType
 from .update_store_request import UpdateStoreRequest
 from .update_store_request_access_tier import UpdateStoreRequestAccessTier
+from .update_store_request_add_ons import UpdateStoreRequestAddOns
 from .webhook_delivery import WebhookDelivery
 from .webhook_delivery_event_type import WebhookDeliveryEventType
 from .webhook_delivery_list import WebhookDeliveryList
@@ -270,6 +275,10 @@ __all__ = (
     "SendTestWebhookRequestType",
     "Store",
     "StoreAccessTier",
+    "StoreAddOn",
+    "StoreAddOnCharged",
+    "StoreAddOnStatus",
+    "StoreAddOnsType0",
     "StoreBalance",
     "StoreBalanceBilling",
     "StoreBalanceCurrency",
@@ -285,6 +294,7 @@ __all__ = (
     "StoreUpdatedEventType",
     "UpdateStoreRequest",
     "UpdateStoreRequestAccessTier",
+    "UpdateStoreRequestAddOns",
     "WebhookDelivery",
     "WebhookDeliveryEventType",
     "WebhookDeliveryList",
