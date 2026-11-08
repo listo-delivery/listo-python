@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "listo-delivery"
+version = "0.1.0"
+description = "Official Python client for the Listo Delivery API."
+readme = "README.md"
+# The generated models use typing.Self and StrEnum, which arrived in 3.11.
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = [
+    "httpx>=0.27,<1",
+    "attrs>=23.2",
+]
+
+[project.urls]
+Homepage = "https://docs.listo.delivery"
+Documentation = "https://docs.listo.delivery/en/quickstart"
+Changelog = "https://docs.listo.delivery/en/changelog"
+Source = "https://github.com/listo-delivery/listo-python"
+Issues = "https://github.com/listo-delivery/listo-python/issues"
+
+[dependency-groups]
+dev = [
+    "pytest==8.4.2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["listo_delivery"]
+
+[tool.hatch.build.targets.sdist]
+include = ["listo_delivery", "README.md", "LICENSE", "pyproject.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

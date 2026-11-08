@@ -1,0 +1,112 @@
+# PUBLISHES THIS PACKAGE TO PyPI. This file is OUTPUT: it is written here by the sync
+# in Listo's own repository, whose copy of this file is its source, and a change
+# to it is released as a new version like any other.
+#
+# WHEN IT RUNS: when the sync pushes a tag `v<version>`, and by hand to retry:
+#   gh workflow run publish.yml --repo listo-delivery/listo-python --ref v<version>
+# It refuses anything that is not a tag, and a tag that is not `v` plus the version
+# in pyproject.toml, so a published version always names the tag it was built from.
+# It builds from this repository's own tree and SKIPS (green) when that version is
+# already on PyPI, so a retry is safe and never overwrites a release.
+#
+# TRUSTED PUBLISHING, NO STORED KEYS: PyPI trusts this repository, this workflow file
+# and the environment `release` (a pending publisher for the project listo-delivery:
+# owner listo-delivery, repository listo-python, workflow publish.yml, environment
+# release; the first run creates the project). Attestations are ON (the action's
+# default, written out below): this repository is public.
+#
+# `ubuntu-latest`: this repository is public, so GitHub-hosted runners are free, and
+# trusted publishing refuses self-hosted runners. Every action is pinned by full
+# commit SHA, the release tag in the comment.
+
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+# A second tag waits for the first run; a publish is never cancelled half way.
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: release
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check the tag against the manifest
+        id: version
+        run: |
+          version="$(python3 -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')"
+          if [ "$GITHUB_REF_TYPE" != "tag" ]; then
+            echo "::error::Run this from a tag, not from $GITHUB_REF. Retry with: gh workflow run publish.yml --repo listo-delivery/listo-python --ref v$version"
+            exit 1
+          fi
+          if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+            echo "::error::The tag is $GITHUB_REF_NAME but pyproject.toml says version $version, so the tag must be v$version."
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Is this version already on PyPI
+        id: registry
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          status="$(curl --silent --show-error --max-time 60 --retry 3 --output /dev/null --write-out '%{http_code}' "https://pypi.org/pypi/listo-delivery/$VERSION/json")" || status=000
+          case "$status" in
+            200)
+              echo "listo-delivery $VERSION is already on PyPI: nothing to publish."
+              echo "published=true" >> "$GITHUB_OUTPUT"
+              ;;
+            404)
+              echo "listo-delivery $VERSION is not on PyPI yet: publishing."
+              echo "published=false" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "::error::PyPI answered HTTP $status, so whether $VERSION is published is unknown. Not publishing."
+              exit 1
+              ;;
+          esac
+
+      - name: Set up uv
+        if: steps.registry.outputs.published == 'false'
+        uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          version: "0.13.5"
+          enable-cache: false
+
+      # Builds from this tree alone into an empty directory, so the directory holds
+      # the wheel and the sdist and nothing else.
+      - name: Build the wheel and the sdist
+        if: steps.registry.outputs.published == 'false'
+        run: |
+          uv build --python 3.12 --out-dir "$RUNNER_TEMP/dist"
+          ls -l "$RUNNER_TEMP/dist"
+
+      - name: Publish to PyPI through trusted publishing
+        if: steps.registry.outputs.published == 'false'
+        uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # v1.14.3
+        with:
+          packages-dir: ${{ runner.temp }}/dist
+          attestations: true
