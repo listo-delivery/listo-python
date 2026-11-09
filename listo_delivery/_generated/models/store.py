@@ -74,9 +74,16 @@ class Store:
             access_tier (StoreAccessTier): How much of Listo the store itself uses. An `api_only` store's
                 deliveries spend your balance, and a `wallet` or `full` store's
                 spend its own; `billing` says which. Writable on create and update
-                (on a store your account creates, `wallet` and `full` are not chosen
-                here),
-                and always `api_only` on a test store. A live store of an account
+                on a store of an account that does not buy add-ons. On a store your
+                account creates with add-ons, the tier follows the Restaurant balance
+                and Full console add-ons (`wallet` and `full` come only from
+                switching one on, and `api_only` only from the add-on ending), so a
+                create that asks for `wallet` or `full` is refused, and so is an
+                update that asks for a tier other than the one the store holds (an
+                update sending `api_only` to a store that holds `wallet` or `full`
+                included), with `422 validation_failed` and
+                `param: "access_tier"`; sending back the tier it holds is accepted.
+                Always `api_only` on a test store. A live store of an account
                 whose restaurants pay their own Plan Listo cannot be `api_only`: it
                 has no console to buy a plan from, so a create or an update that
                 asks for it is refused with `422 validation_failed` and
@@ -107,7 +114,8 @@ class Store:
                 can hold add-ons; any other store shows `add_ons: null`.
                 When it is an object it has all five keys, each with every field.
                 Switch them on and off with `PATCH /v1/stores/{id}`. `wallet` and
-                `full_console` read `available: false` and cannot be switched on. See
+                `full_console` change the store's `access_tier` and are for live
+                stores: on a test store they read `available: false`. See
                 [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
             order_value_limits (StoreOrderValueLimits): The most an order may be worth at this store right now, per payment
                 type. A request above it is refused with `order_value_over_cap`

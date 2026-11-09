@@ -20,7 +20,8 @@ class StoreAddOnsType0:
     can hold add-ons; any other store shows `add_ons: null`.
     When it is an object it has all five keys, each with every field.
     Switch them on and off with `PATCH /v1/stores/{id}`. `wallet` and
-    `full_console` read `available: false` and cannot be switched on. See
+    `full_console` change the store's `access_tier` and are for live
+    stores: on a test store they read `available: false`. See
     [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
 
         Attributes:

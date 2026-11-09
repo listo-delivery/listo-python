@@ -106,9 +106,11 @@ def sync_detailed(
     Three refusals:
 
     - `422 console_access_required` on a store whose `access_tier` is
-      `api_only`. That store has no console to sign in to, so there is
-      nothing to invite anybody to. Set the tier first, then call this
-      again.
+      `api_only` and that holds no balance to withdraw. That store has no
+      console to sign in to, so there is nothing to invite anybody to. Give
+      the store a tier first (on a store of an account that buys add-ons,
+      switch on its Restaurant balance or Full console add-on), then call
+      this again.
     - `422 validation_failed` with `param: "email"` when the store already
       has an owner at a different address. The `message` names that owner.
       A store has one owner, and this endpoint cannot change who it is. To
@@ -170,9 +172,11 @@ def sync(
     Three refusals:
 
     - `422 console_access_required` on a store whose `access_tier` is
-      `api_only`. That store has no console to sign in to, so there is
-      nothing to invite anybody to. Set the tier first, then call this
-      again.
+      `api_only` and that holds no balance to withdraw. That store has no
+      console to sign in to, so there is nothing to invite anybody to. Give
+      the store a tier first (on a store of an account that buys add-ons,
+      switch on its Restaurant balance or Full console add-on), then call
+      this again.
     - `422 validation_failed` with `param: "email"` when the store already
       has an owner at a different address. The `message` names that owner.
       A store has one owner, and this endpoint cannot change who it is. To
@@ -229,9 +233,11 @@ async def asyncio_detailed(
     Three refusals:
 
     - `422 console_access_required` on a store whose `access_tier` is
-      `api_only`. That store has no console to sign in to, so there is
-      nothing to invite anybody to. Set the tier first, then call this
-      again.
+      `api_only` and that holds no balance to withdraw. That store has no
+      console to sign in to, so there is nothing to invite anybody to. Give
+      the store a tier first (on a store of an account that buys add-ons,
+      switch on its Restaurant balance or Full console add-on), then call
+      this again.
     - `422 validation_failed` with `param: "email"` when the store already
       has an owner at a different address. The `message` names that owner.
       A store has one owner, and this endpoint cannot change who it is. To
@@ -291,9 +297,11 @@ async def asyncio(
     Three refusals:
 
     - `422 console_access_required` on a store whose `access_tier` is
-      `api_only`. That store has no console to sign in to, so there is
-      nothing to invite anybody to. Set the tier first, then call this
-      again.
+      `api_only` and that holds no balance to withdraw. That store has no
+      console to sign in to, so there is nothing to invite anybody to. Give
+      the store a tier first (on a store of an account that buys add-ons,
+      switch on its Restaurant balance or Full console add-on), then call
+      this again.
     - `422 validation_failed` with `param: "email"` when the store already
       has an owner at a different address. The `message` names that owner.
       A store has one owner, and this endpoint cannot change who it is. To

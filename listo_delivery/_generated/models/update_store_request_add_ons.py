@@ -14,10 +14,13 @@ T = TypeVar("T", bound="UpdateStoreRequestAddOns")
 class UpdateStoreRequestAddOns:
     """Add-ons to switch on (`true`) or off (`false`). Send only the ones
     you are changing: a key you leave out is untouched, and this never
-    replaces the set. `wallet` and `full_console` cannot be switched
-    on: `true` for either is refused with `422 validation_failed` and
-    `param: "add_ons.wallet"` or `"add_ons.full_console"`, and `false`
-    is accepted. Each value must be a JSON boolean; the string
+    replaces the set. `wallet` and `full_console` are for live stores:
+    on a test store `true` for either is refused with
+    `422 validation_failed` and `param: "add_ons.wallet"` or
+    `"add_ons.full_console"`, and `false` is accepted. A request that
+    switches on more than one add-on that would charge is refused with
+    `422 validation_failed` and `param: "add_ons.<key>"`; send them in
+    separate requests. Each value must be a JSON boolean; the string
     `"true"`, `1` and `null` are refused with `422 validation_failed`
     and `param: "add_ons.<key>"`, and so is a key that is not an add-on.
 

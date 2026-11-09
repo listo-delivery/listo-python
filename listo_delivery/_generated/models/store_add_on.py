@@ -27,11 +27,13 @@ class StoreAddOn:
             status (StoreAddOnStatus): `off` is not switched on. `on` is switched on. `ending` is a monthly
                 add-on you switched off that keeps running until `ends_on`, the end
                 of the month already paid (`ends_on` is null only while a payment
-                for the next month is still being confirmed). `scheduled` is a monthly add-on that
-                starts when a month already running ends (`wallet` switched on
-                while `full_console` is running out). `past_due` is `full_console`
-                only: its renewal was refused and it is being retried, and the store
-                is still served meanwhile.
+                for the next month is still being confirmed). `scheduled` is
+                `wallet` only: it was switched on and paid while `full_console` is
+                running out, and it starts the day after `full_console`'s last day.
+                `past_due` is `full_console` only: its renewal was refused and it is
+                being retried, and the store is still served meanwhile. The
+                pay-per-use add-ons (`customer_whatsapp`, `card_payments`) read only
+                `off` or `on`, and `ending` appears only on the monthly ones.
             price_cents (int): What the add-on costs, in cents before IVA: per month for a
                 `monthly` add-on and per use for the other two. While it is off this
                 is today's price; once it is on it is the price it was switched on at.
@@ -47,7 +49,11 @@ class StoreAddOn:
                 month later if it was paid, or the add-on ends if it was not). On the
                 renewal day itself, before any payment has been started, it is that
                 day.
-            ends_on (datetime.date | None): The last day an `ending` add-on runs. Null in every other status.
+            ends_on (datetime.date | None): The last day an `ending` add-on is on. Null in every other status.
+                It means the same for every monthly add-on, `full_console`
+                included: the add-on is on through this day and off from the next.
+                A `wallet` scheduled behind an ending `full_console` starts the
+                next day, and the store's `access_tier` changes that day.
                 For an `ending` add-on it is null ONLY while a payment is still
                 being confirmed: its month was due to renew when you switched it
                 off, a payment for the next month was started, and the end date is
@@ -57,9 +63,10 @@ class StoreAddOn:
                 paid, including the hours after that day has passed and before the
                 add-on is ended.
             available (bool): Whether this add-on can be switched on for the store. `false` for
-                `wallet` and `full_console` on every store: they cannot be switched
-                on, and asking to is refused with `422 validation_failed`. `true`
-                for the other three.
+                `wallet` and `full_console` on a test store, which cannot hold them:
+                asking to switch either on there is refused with
+                `422 validation_failed`. `true` for the other three on every store
+                that holds add-ons, and for those two on a live store.
     """
 
     status: StoreAddOnStatus

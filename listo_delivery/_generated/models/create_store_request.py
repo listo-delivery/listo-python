@@ -27,9 +27,10 @@ class CreateStoreRequest:
         timezone (str | Unset): An IANA time zone name.
         default_business_fee_share (int | Unset): The percent of the delivery fee the store pays by default.
         access_tier (CreateStoreRequestAccessTier | Unset): What the store gets besides the API. On a store your account
-            creates, `wallet` and `full` are not chosen here, so a create that
-            asks for either tier is refused with `422 validation_failed` and
-            `param: "access_tier"`. `api_only` is always accepted.
+            creates with add-ons, `wallet` and `full` come only from the
+            Restaurant balance and Full console add-ons, so a create that asks
+            for either tier is refused with `422 validation_failed` and
+            `param: "access_tier"`. `api_only` is accepted.
         markup_cents (int | Unset): Your markup on each delivery, in centavos, up to 1000000.
         external_id (str | Unset): Your own reference for this location.
         owner_email (str | Unset): The restaurant owner to invite, for a store with a console.

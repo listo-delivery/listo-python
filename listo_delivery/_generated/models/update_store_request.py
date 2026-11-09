@@ -32,17 +32,21 @@ class UpdateStoreRequest:
         timezone (str | Unset): An IANA time zone name.
         default_business_fee_share (int | Unset):
         access_tier (UpdateStoreRequestAccessTier | Unset): What the store gets besides the API. On a store your account
-            created, `wallet` and `full` are not chosen here, so a request that
-            asks for either tier is refused with `422 validation_failed` and
-            `param: "access_tier"`. `api_only` is always accepted.
+            created with add-ons, the tier follows the Restaurant balance and
+            Full console add-ons, so a request that asks for a tier the store
+            does not hold is refused with `422 validation_failed` and
+            `param: "access_tier"`. Sending back the tier it holds is accepted.
         markup_cents (int | Unset):
         external_id (None | str | Unset): Your own reference for this location. Null clears it.
         add_ons (UpdateStoreRequestAddOns | Unset): Add-ons to switch on (`true`) or off (`false`). Send only the ones
             you are changing: a key you leave out is untouched, and this never
-            replaces the set. `wallet` and `full_console` cannot be switched
-            on: `true` for either is refused with `422 validation_failed` and
-            `param: "add_ons.wallet"` or `"add_ons.full_console"`, and `false`
-            is accepted. Each value must be a JSON boolean; the string
+            replaces the set. `wallet` and `full_console` are for live stores:
+            on a test store `true` for either is refused with
+            `422 validation_failed` and `param: "add_ons.wallet"` or
+            `"add_ons.full_console"`, and `false` is accepted. A request that
+            switches on more than one add-on that would charge is refused with
+            `422 validation_failed` and `param: "add_ons.<key>"`; send them in
+            separate requests. Each value must be a JSON boolean; the string
             `"true"`, `1` and `null` are refused with `422 validation_failed`
             and `param: "add_ons.<key>"`, and so is a key that is not an add-on.
     """
