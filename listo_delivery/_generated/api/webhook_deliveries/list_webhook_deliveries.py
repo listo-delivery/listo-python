@@ -5,6 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.error_response import ErrorResponse
 from ...models.list_webhook_deliveries_status import ListWebhookDeliveriesStatus
 from ...models.webhook_delivery_list import WebhookDeliveryList
 from ...types import UNSET, Response, Unset
@@ -48,11 +49,16 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> WebhookDeliveryList | None:
+) -> ErrorResponse | WebhookDeliveryList | None:
     if response.status_code == 200:
         response_200 = WebhookDeliveryList.from_dict(response.json())
 
         return response_200
+
+    if response.status_code == 422:
+        response_422 = ErrorResponse.from_dict(response.json())
+
+        return response_422
 
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -62,7 +68,7 @@ def _parse_response(
 
 def _build_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Response[WebhookDeliveryList]:
+) -> Response[ErrorResponse | WebhookDeliveryList]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -79,7 +85,7 @@ def sync_detailed(
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
-) -> Response[WebhookDeliveryList]:
+) -> Response[ErrorResponse | WebhookDeliveryList]:
     """List webhook delivery attempts
 
      Every attempt Listo made to POST an event to your webhook URL, newest
@@ -110,7 +116,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[WebhookDeliveryList]
+        Response[ErrorResponse | WebhookDeliveryList]
     """
 
     kwargs = _get_kwargs(
@@ -136,7 +142,7 @@ def sync(
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
-) -> WebhookDeliveryList | None:
+) -> ErrorResponse | WebhookDeliveryList | None:
     """List webhook delivery attempts
 
      Every attempt Listo made to POST an event to your webhook URL, newest
@@ -167,7 +173,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        WebhookDeliveryList
+        ErrorResponse | WebhookDeliveryList
     """
 
     return sync_detailed(
@@ -188,7 +194,7 @@ async def asyncio_detailed(
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
-) -> Response[WebhookDeliveryList]:
+) -> Response[ErrorResponse | WebhookDeliveryList]:
     """List webhook delivery attempts
 
      Every attempt Listo made to POST an event to your webhook URL, newest
@@ -219,7 +225,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[WebhookDeliveryList]
+        Response[ErrorResponse | WebhookDeliveryList]
     """
 
     kwargs = _get_kwargs(
@@ -243,7 +249,7 @@ async def asyncio(
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
-) -> WebhookDeliveryList | None:
+) -> ErrorResponse | WebhookDeliveryList | None:
     """List webhook delivery attempts
 
      Every attempt Listo made to POST an event to your webhook URL, newest
@@ -274,7 +280,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        WebhookDeliveryList
+        ErrorResponse | WebhookDeliveryList
     """
 
     return (

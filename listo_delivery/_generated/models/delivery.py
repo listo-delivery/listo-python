@@ -104,7 +104,7 @@ class Delivery:
             test (bool): Whether this order lives in the sandbox. Derived from the store, so
                 there is no field to set: a test key can only reach test stores.
             payment (DeliveryPayment): How the customer pays, and where that got to.
-            order_value_cents (int | None): The goods value you sent, untouched.
+            order_value_cents (int): The goods value you sent, untouched.
             fee_cents (int): The total delivery fee.
             business_fee_cents (int): The part of `fee_cents` charged to you.
             customer_fee_cents (int): The part of `fee_cents` charged to the customer. Always sums with
@@ -296,7 +296,7 @@ class Delivery:
     store_id: str
     test: bool
     payment: DeliveryPayment
-    order_value_cents: int | None
+    order_value_cents: int
     fee_cents: int
     business_fee_cents: int
     customer_fee_cents: int
@@ -362,7 +362,6 @@ class Delivery:
 
         payment = self.payment.to_dict()
 
-        order_value_cents: int | None
         order_value_cents = self.order_value_cents
 
         fee_cents = self.fee_cents
@@ -595,12 +594,7 @@ class Delivery:
 
         payment = DeliveryPayment.from_dict(d.pop("payment"))
 
-        def _parse_order_value_cents(data: object) -> int | None:
-            if data is None:
-                return data
-            return cast(int | None, data)
-
-        order_value_cents = _parse_order_value_cents(d.pop("order_value_cents"))
+        order_value_cents = d.pop("order_value_cents")
 
         fee_cents = d.pop("fee_cents")
 

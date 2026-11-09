@@ -5,6 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.error_response import ErrorResponse
 from ...models.event_list import EventList
 from ...models.list_events_type import ListEventsType
 from ...types import UNSET, Response, Unset
@@ -48,11 +49,16 @@ def _get_kwargs(
 
 def _parse_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> EventList | None:
+) -> ErrorResponse | EventList | None:
     if response.status_code == 200:
         response_200 = EventList.from_dict(response.json())
 
         return response_200
+
+    if response.status_code == 422:
+        response_422 = ErrorResponse.from_dict(response.json())
+
+        return response_422
 
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
@@ -62,7 +68,7 @@ def _parse_response(
 
 def _build_response(
     *, client: AuthenticatedClient | Client, response: httpx.Response
-) -> Response[EventList]:
+) -> Response[ErrorResponse | EventList]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -79,7 +85,7 @@ def sync_detailed(
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
-) -> Response[EventList]:
+) -> Response[ErrorResponse | EventList]:
     """List your webhook events
 
      The events Listo emitted for you, newest first, keyset-paginated. Each
@@ -110,7 +116,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[EventList]
+        Response[ErrorResponse | EventList]
     """
 
     kwargs = _get_kwargs(
@@ -136,7 +142,7 @@ def sync(
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
-) -> EventList | None:
+) -> ErrorResponse | EventList | None:
     """List your webhook events
 
      The events Listo emitted for you, newest first, keyset-paginated. Each
@@ -167,7 +173,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        EventList
+        ErrorResponse | EventList
     """
 
     return sync_detailed(
@@ -188,7 +194,7 @@ async def asyncio_detailed(
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
-) -> Response[EventList]:
+) -> Response[ErrorResponse | EventList]:
     """List your webhook events
 
      The events Listo emitted for you, newest first, keyset-paginated. Each
@@ -219,7 +225,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[EventList]
+        Response[ErrorResponse | EventList]
     """
 
     kwargs = _get_kwargs(
@@ -243,7 +249,7 @@ async def asyncio(
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
-) -> EventList | None:
+) -> ErrorResponse | EventList | None:
     """List your webhook events
 
      The events Listo emitted for you, newest first, keyset-paginated. Each
@@ -274,7 +280,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        EventList
+        ErrorResponse | EventList
     """
 
     return (
