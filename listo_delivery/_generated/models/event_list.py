@@ -9,6 +9,7 @@ from attrs import field as _attrs_field
 if TYPE_CHECKING:
     from ..models.delivery_courier_location_event import DeliveryCourierLocationEvent
     from ..models.delivery_message_skipped_event import DeliveryMessageSkippedEvent
+    from ..models.delivery_rated_event import DeliveryRatedEvent
     from ..models.delivery_status_changed_event import DeliveryStatusChangedEvent
     from ..models.delivery_updated_event import DeliveryUpdatedEvent
     from ..models.store_connected_event import StoreConnectedEvent
@@ -24,8 +25,9 @@ class EventList:
     """One page of events, newest first.
 
     Attributes:
-        data (list[DeliveryCourierLocationEvent | DeliveryMessageSkippedEvent | DeliveryStatusChangedEvent |
-            DeliveryUpdatedEvent | StoreConnectedEvent | StoreUpdatedEvent | WithdrawalUpdatedEvent]):
+        data (list[DeliveryCourierLocationEvent | DeliveryMessageSkippedEvent | DeliveryRatedEvent |
+            DeliveryStatusChangedEvent | DeliveryUpdatedEvent | StoreConnectedEvent | StoreUpdatedEvent |
+            WithdrawalUpdatedEvent]):
         has_more (bool): True when a further page exists.
         cursor (None | str): Pass as `cursor` to read the next page. Null on the last page.
     """
@@ -33,6 +35,7 @@ class EventList:
     data: list[
         DeliveryCourierLocationEvent
         | DeliveryMessageSkippedEvent
+        | DeliveryRatedEvent
         | DeliveryStatusChangedEvent
         | DeliveryUpdatedEvent
         | StoreConnectedEvent
@@ -47,6 +50,7 @@ class EventList:
         from ..models.delivery_courier_location_event import (
             DeliveryCourierLocationEvent,
         )
+        from ..models.delivery_message_skipped_event import DeliveryMessageSkippedEvent
         from ..models.delivery_status_changed_event import DeliveryStatusChangedEvent
         from ..models.delivery_updated_event import DeliveryUpdatedEvent
         from ..models.store_connected_event import StoreConnectedEvent
@@ -63,6 +67,7 @@ class EventList:
                 or isinstance(data_item_data, WithdrawalUpdatedEvent)
                 or isinstance(data_item_data, StoreUpdatedEvent)
                 or isinstance(data_item_data, StoreConnectedEvent)
+                or isinstance(data_item_data, DeliveryMessageSkippedEvent)
             ):
                 data_item = data_item_data.to_dict()
             else:
@@ -93,6 +98,7 @@ class EventList:
             DeliveryCourierLocationEvent,
         )
         from ..models.delivery_message_skipped_event import DeliveryMessageSkippedEvent
+        from ..models.delivery_rated_event import DeliveryRatedEvent
         from ..models.delivery_status_changed_event import DeliveryStatusChangedEvent
         from ..models.delivery_updated_event import DeliveryUpdatedEvent
         from ..models.store_connected_event import StoreConnectedEvent
@@ -109,6 +115,7 @@ class EventList:
             ) -> (
                 DeliveryCourierLocationEvent
                 | DeliveryMessageSkippedEvent
+                | DeliveryRatedEvent
                 | DeliveryStatusChangedEvent
                 | DeliveryUpdatedEvent
                 | StoreConnectedEvent
@@ -175,13 +182,23 @@ class EventList:
                     return componentsschemas_webhook_event_type_5
                 except (TypeError, ValueError, AttributeError, KeyError):
                     pass
+                try:
+                    if not isinstance(data, dict):
+                        raise TypeError()
+                    componentsschemas_webhook_event_type_6 = (
+                        DeliveryMessageSkippedEvent.from_dict(data)
+                    )
+
+                    return componentsschemas_webhook_event_type_6
+                except (TypeError, ValueError, AttributeError, KeyError):
+                    pass
                 if not isinstance(data, dict):
                     raise TypeError()
-                componentsschemas_webhook_event_type_6 = (
-                    DeliveryMessageSkippedEvent.from_dict(data)
+                componentsschemas_webhook_event_type_7 = DeliveryRatedEvent.from_dict(
+                    data
                 )
 
-                return componentsschemas_webhook_event_type_6
+                return componentsschemas_webhook_event_type_7
 
             data_item = _parse_data_item(data_item_data)
 

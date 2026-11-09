@@ -3,6 +3,7 @@
 from ._generated.models import (
     DeliveryCourierLocationEvent,
     DeliveryMessageSkippedEvent,
+    DeliveryRatedEvent,
     DeliveryStatusChangedEvent,
     DeliveryUpdatedEvent,
     StoreConnectedEvent,
@@ -13,6 +14,7 @@ from ._generated.models import (
 WebhookEvent = (
     DeliveryCourierLocationEvent
     | DeliveryMessageSkippedEvent
+    | DeliveryRatedEvent
     | DeliveryStatusChangedEvent
     | DeliveryUpdatedEvent
     | StoreConnectedEvent
@@ -23,6 +25,7 @@ WebhookEvent = (
 EVENT_TYPES: dict[str, type] = {
     "delivery.courier_location": DeliveryCourierLocationEvent,
     "delivery.message_skipped": DeliveryMessageSkippedEvent,
+    "delivery.rated": DeliveryRatedEvent,
     "delivery.status_changed": DeliveryStatusChangedEvent,
     "delivery.updated": DeliveryUpdatedEvent,
     "store.connected": StoreConnectedEvent,

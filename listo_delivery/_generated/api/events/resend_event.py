@@ -8,6 +8,7 @@ from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...models.delivery_courier_location_event import DeliveryCourierLocationEvent
 from ...models.delivery_message_skipped_event import DeliveryMessageSkippedEvent
+from ...models.delivery_rated_event import DeliveryRatedEvent
 from ...models.delivery_status_changed_event import DeliveryStatusChangedEvent
 from ...models.delivery_updated_event import DeliveryUpdatedEvent
 from ...models.error_response import ErrorResponse
@@ -36,6 +37,7 @@ def _parse_response(
 ) -> (
     DeliveryCourierLocationEvent
     | DeliveryMessageSkippedEvent
+    | DeliveryRatedEvent
     | DeliveryStatusChangedEvent
     | DeliveryUpdatedEvent
     | StoreConnectedEvent
@@ -51,6 +53,7 @@ def _parse_response(
         ) -> (
             DeliveryCourierLocationEvent
             | DeliveryMessageSkippedEvent
+            | DeliveryRatedEvent
             | DeliveryStatusChangedEvent
             | DeliveryUpdatedEvent
             | StoreConnectedEvent
@@ -117,13 +120,21 @@ def _parse_response(
                 return componentsschemas_webhook_event_type_5
             except (TypeError, ValueError, AttributeError, KeyError):
                 pass
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                componentsschemas_webhook_event_type_6 = (
+                    DeliveryMessageSkippedEvent.from_dict(data)
+                )
+
+                return componentsschemas_webhook_event_type_6
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
             if not isinstance(data, dict):
                 raise TypeError()
-            componentsschemas_webhook_event_type_6 = (
-                DeliveryMessageSkippedEvent.from_dict(data)
-            )
+            componentsschemas_webhook_event_type_7 = DeliveryRatedEvent.from_dict(data)
 
-            return componentsschemas_webhook_event_type_6
+            return componentsschemas_webhook_event_type_7
 
         response_202 = _parse_response_202(response.json())
 
@@ -160,6 +171,7 @@ def _build_response(
 ) -> Response[
     DeliveryCourierLocationEvent
     | DeliveryMessageSkippedEvent
+    | DeliveryRatedEvent
     | DeliveryStatusChangedEvent
     | DeliveryUpdatedEvent
     | StoreConnectedEvent
@@ -182,6 +194,7 @@ def sync_detailed(
 ) -> Response[
     DeliveryCourierLocationEvent
     | DeliveryMessageSkippedEvent
+    | DeliveryRatedEvent
     | DeliveryStatusChangedEvent
     | DeliveryUpdatedEvent
     | StoreConnectedEvent
@@ -226,7 +239,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[DeliveryCourierLocationEvent | DeliveryMessageSkippedEvent | DeliveryStatusChangedEvent | DeliveryUpdatedEvent | StoreConnectedEvent | StoreUpdatedEvent | WithdrawalUpdatedEvent | ErrorResponse]
+        Response[DeliveryCourierLocationEvent | DeliveryMessageSkippedEvent | DeliveryRatedEvent | DeliveryStatusChangedEvent | DeliveryUpdatedEvent | StoreConnectedEvent | StoreUpdatedEvent | WithdrawalUpdatedEvent | ErrorResponse]
     """
 
     kwargs = _get_kwargs(
@@ -247,6 +260,7 @@ def sync(
 ) -> (
     DeliveryCourierLocationEvent
     | DeliveryMessageSkippedEvent
+    | DeliveryRatedEvent
     | DeliveryStatusChangedEvent
     | DeliveryUpdatedEvent
     | StoreConnectedEvent
@@ -292,7 +306,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        DeliveryCourierLocationEvent | DeliveryMessageSkippedEvent | DeliveryStatusChangedEvent | DeliveryUpdatedEvent | StoreConnectedEvent | StoreUpdatedEvent | WithdrawalUpdatedEvent | ErrorResponse
+        DeliveryCourierLocationEvent | DeliveryMessageSkippedEvent | DeliveryRatedEvent | DeliveryStatusChangedEvent | DeliveryUpdatedEvent | StoreConnectedEvent | StoreUpdatedEvent | WithdrawalUpdatedEvent | ErrorResponse
     """
 
     return sync_detailed(
@@ -308,6 +322,7 @@ async def asyncio_detailed(
 ) -> Response[
     DeliveryCourierLocationEvent
     | DeliveryMessageSkippedEvent
+    | DeliveryRatedEvent
     | DeliveryStatusChangedEvent
     | DeliveryUpdatedEvent
     | StoreConnectedEvent
@@ -352,7 +367,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[DeliveryCourierLocationEvent | DeliveryMessageSkippedEvent | DeliveryStatusChangedEvent | DeliveryUpdatedEvent | StoreConnectedEvent | StoreUpdatedEvent | WithdrawalUpdatedEvent | ErrorResponse]
+        Response[DeliveryCourierLocationEvent | DeliveryMessageSkippedEvent | DeliveryRatedEvent | DeliveryStatusChangedEvent | DeliveryUpdatedEvent | StoreConnectedEvent | StoreUpdatedEvent | WithdrawalUpdatedEvent | ErrorResponse]
     """
 
     kwargs = _get_kwargs(
@@ -371,6 +386,7 @@ async def asyncio(
 ) -> (
     DeliveryCourierLocationEvent
     | DeliveryMessageSkippedEvent
+    | DeliveryRatedEvent
     | DeliveryStatusChangedEvent
     | DeliveryUpdatedEvent
     | StoreConnectedEvent
@@ -416,7 +432,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        DeliveryCourierLocationEvent | DeliveryMessageSkippedEvent | DeliveryStatusChangedEvent | DeliveryUpdatedEvent | StoreConnectedEvent | StoreUpdatedEvent | WithdrawalUpdatedEvent | ErrorResponse
+        DeliveryCourierLocationEvent | DeliveryMessageSkippedEvent | DeliveryRatedEvent | DeliveryStatusChangedEvent | DeliveryUpdatedEvent | StoreConnectedEvent | StoreUpdatedEvent | WithdrawalUpdatedEvent | ErrorResponse
     """
 
     return (

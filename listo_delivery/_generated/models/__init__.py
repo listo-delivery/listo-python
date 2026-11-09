@@ -78,6 +78,10 @@ from .delivery_proofs import DeliveryProofs
 from .delivery_proofs_dropoff_type_0 import DeliveryProofsDropoffType0
 from .delivery_proofs_pickup_type_0 import DeliveryProofsPickupType0
 from .delivery_proofs_return_type_0 import DeliveryProofsReturnType0
+from .delivery_rated_event import DeliveryRatedEvent
+from .delivery_rated_event_type import DeliveryRatedEventType
+from .delivery_rating_type_0 import DeliveryRatingType0
+from .delivery_rating_type_0_food_reasons_item import DeliveryRatingType0FoodReasonsItem
 from .delivery_refunds_item import DeliveryRefundsItem
 from .delivery_refunds_item_party import DeliveryRefundsItemParty
 from .delivery_refunds_item_requested_via import DeliveryRefundsItemRequestedVia
@@ -229,6 +233,10 @@ __all__ = (
     "DeliveryProofsDropoffType0",
     "DeliveryProofsPickupType0",
     "DeliveryProofsReturnType0",
+    "DeliveryRatedEvent",
+    "DeliveryRatedEventType",
+    "DeliveryRatingType0",
+    "DeliveryRatingType0FoodReasonsItem",
     "DeliveryRefundsItem",
     "DeliveryRefundsItemParty",
     "DeliveryRefundsItemRequestedVia",

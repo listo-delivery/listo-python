@@ -29,6 +29,7 @@ if TYPE_CHECKING:
     from ..models.delivery_pickup import DeliveryPickup
     from ..models.delivery_proof_type_0 import DeliveryProofType0
     from ..models.delivery_proofs import DeliveryProofs
+    from ..models.delivery_rating_type_0 import DeliveryRatingType0
     from ..models.delivery_refunds_item import DeliveryRefundsItem
     from ..models.delivery_return_verification import DeliveryReturnVerification
     from ..models.delivery_verification_type_0 import DeliveryVerificationType0
@@ -197,6 +198,14 @@ class Delivery:
                 it: it is a short-lived signed link, never a permanent one. A
                 partner that needs the image later fetches
                 `GET /v1/deliveries/{id}` again for a fresh link, or keeps a copy.
+            rating (DeliveryRatingType0 | None): What the customer rated the FOOD, for a store with the `ratings`
+                add-on. Null for every other delivery, so the key is always there.
+                It is filled only for a rating the customer gave while the add-on
+                was on for the store: a rating given before you switched it on, or
+                after it ended, stays null for good, and a rating given while it was
+                on stays here after the add-on ends. The customer rates the food and
+                the delivery separately; only the food half is here. The `delivery.rated`
+                event carries the delivery with this filled, once.
             cancellation (DeliveryCancellationType0 | None): Who called the order off, and why. Null on an order that was
                 not cancelled.
             failure_reason (DeliveryFailureReasonType1 | DeliveryFailureReasonType2Type1 | DeliveryFailureReasonType3Type1 |
@@ -315,6 +324,7 @@ class Delivery:
     return_verification: DeliveryReturnVerification
     proof: DeliveryProofType0 | None
     proofs: DeliveryProofs
+    rating: DeliveryRatingType0 | None
     cancellation: DeliveryCancellationType0 | None
     failure_reason: (
         DeliveryFailureReasonType1
@@ -343,6 +353,7 @@ class Delivery:
         from ..models.delivery_courier_type_0 import DeliveryCourierType0
         from ..models.delivery_manifest_type_0 import DeliveryManifestType0
         from ..models.delivery_proof_type_0 import DeliveryProofType0
+        from ..models.delivery_rating_type_0 import DeliveryRatingType0
         from ..models.delivery_verification_type_0 import DeliveryVerificationType0
 
         id = self.id
@@ -425,6 +436,12 @@ class Delivery:
             proof = self.proof
 
         proofs = self.proofs.to_dict()
+
+        rating: dict[str, Any] | None
+        if isinstance(self.rating, DeliveryRatingType0):
+            rating = self.rating.to_dict()
+        else:
+            rating = self.rating
 
         cancellation: dict[str, Any] | None
         if isinstance(self.cancellation, DeliveryCancellationType0):
@@ -536,6 +553,7 @@ class Delivery:
                 "return_verification": return_verification,
                 "proof": proof,
                 "proofs": proofs,
+                "rating": rating,
                 "cancellation": cancellation,
                 "failure_reason": failure_reason,
                 "charges": charges,
@@ -568,6 +586,7 @@ class Delivery:
         from ..models.delivery_pickup import DeliveryPickup
         from ..models.delivery_proof_type_0 import DeliveryProofType0
         from ..models.delivery_proofs import DeliveryProofs
+        from ..models.delivery_rating_type_0 import DeliveryRatingType0
         from ..models.delivery_refunds_item import DeliveryRefundsItem
         from ..models.delivery_return_verification import DeliveryReturnVerification
         from ..models.delivery_verification_type_0 import DeliveryVerificationType0
@@ -721,6 +740,21 @@ class Delivery:
         proof = _parse_proof(d.pop("proof"))
 
         proofs = DeliveryProofs.from_dict(d.pop("proofs"))
+
+        def _parse_rating(data: object) -> DeliveryRatingType0 | None:
+            if data is None:
+                return data
+            try:
+                if not isinstance(data, dict):
+                    raise TypeError()
+                rating_type_0 = DeliveryRatingType0.from_dict(data)
+
+                return rating_type_0
+            except (TypeError, ValueError, AttributeError, KeyError):
+                pass
+            return cast(DeliveryRatingType0 | None, data)
+
+        rating = _parse_rating(d.pop("rating"))
 
         def _parse_cancellation(data: object) -> DeliveryCancellationType0 | None:
             if data is None:
@@ -943,6 +977,7 @@ class Delivery:
             return_verification=return_verification,
             proof=proof,
             proofs=proofs,
+            rating=rating,
             cancellation=cancellation,
             failure_reason=failure_reason,
             charges=charges,

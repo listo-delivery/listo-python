@@ -26,27 +26,37 @@ class StoreAddOnsType0:
         Attributes:
             customer_whatsapp (StoreAddOn): One paid add-on of a store and where it stands. `customer_whatsapp`
                 sends the customer WhatsApp updates on each delivered trip, `ratings`
-                lets customers rate the delivery, `card_payments` lets the store take
+                gives you the customer's rating of the food on the delivery (`rating`)
+                and sends a `delivery.rated` event, for the ratings given while it is on;
+                `card_payments` lets the store take
                 card payments, `wallet` gives the store its own balance, and
                 `full_console` gives the store its own console and its Plan Listo.
             ratings (StoreAddOn): One paid add-on of a store and where it stands. `customer_whatsapp`
                 sends the customer WhatsApp updates on each delivered trip, `ratings`
-                lets customers rate the delivery, `card_payments` lets the store take
+                gives you the customer's rating of the food on the delivery (`rating`)
+                and sends a `delivery.rated` event, for the ratings given while it is on;
+                `card_payments` lets the store take
                 card payments, `wallet` gives the store its own balance, and
                 `full_console` gives the store its own console and its Plan Listo.
             card_payments (StoreAddOn): One paid add-on of a store and where it stands. `customer_whatsapp`
                 sends the customer WhatsApp updates on each delivered trip, `ratings`
-                lets customers rate the delivery, `card_payments` lets the store take
+                gives you the customer's rating of the food on the delivery (`rating`)
+                and sends a `delivery.rated` event, for the ratings given while it is on;
+                `card_payments` lets the store take
                 card payments, `wallet` gives the store its own balance, and
                 `full_console` gives the store its own console and its Plan Listo.
             wallet (StoreAddOn): One paid add-on of a store and where it stands. `customer_whatsapp`
                 sends the customer WhatsApp updates on each delivered trip, `ratings`
-                lets customers rate the delivery, `card_payments` lets the store take
+                gives you the customer's rating of the food on the delivery (`rating`)
+                and sends a `delivery.rated` event, for the ratings given while it is on;
+                `card_payments` lets the store take
                 card payments, `wallet` gives the store its own balance, and
                 `full_console` gives the store its own console and its Plan Listo.
             full_console (StoreAddOn): One paid add-on of a store and where it stands. `customer_whatsapp`
                 sends the customer WhatsApp updates on each delivered trip, `ratings`
-                lets customers rate the delivery, `card_payments` lets the store take
+                gives you the customer's rating of the food on the delivery (`rating`)
+                and sends a `delivery.rated` event, for the ratings given while it is on;
+                `card_payments` lets the store take
                 card payments, `wallet` gives the store its own balance, and
                 `full_console` gives the store its own console and its Plan Listo.
     """

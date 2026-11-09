@@ -7,6 +7,7 @@ from enum import StrEnum
 class WebhookDeliveryEventType(StrEnum):
     DELIVERY_COURIER_LOCATION = "delivery.courier_location"
     DELIVERY_MESSAGE_SKIPPED = "delivery.message_skipped"
+    DELIVERY_RATED = "delivery.rated"
     DELIVERY_STATUS_CHANGED = "delivery.status_changed"
     DELIVERY_UPDATED = "delivery.updated"
     STORE_CONNECTED = "store.connected"
