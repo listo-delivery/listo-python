@@ -227,7 +227,10 @@ def sync_detailed(
 
     A `type` that is not a published event type is `422 validation_failed`
     with `param: "type"`. With no webhook URL configured for the key's mode
-    the answer is `409 webhook_endpoint_not_configured`.
+    the answer is `409 webhook_endpoint_not_configured`, unless you send
+    `deliver: false`: then the event is recorded and listed on
+    `GET /v1/events` and nothing is sent to a URL, so it needs none. It still
+    counts toward the thirty an hour.
 
     Args:
         body (SendTestWebhookRequest): Which event to send a sample of.
@@ -287,7 +290,10 @@ def sync(
 
     A `type` that is not a published event type is `422 validation_failed`
     with `param: "type"`. With no webhook URL configured for the key's mode
-    the answer is `409 webhook_endpoint_not_configured`.
+    the answer is `409 webhook_endpoint_not_configured`, unless you send
+    `deliver: false`: then the event is recorded and listed on
+    `GET /v1/events` and nothing is sent to a URL, so it needs none. It still
+    counts toward the thirty an hour.
 
     Args:
         body (SendTestWebhookRequest): Which event to send a sample of.
@@ -341,7 +347,10 @@ async def asyncio_detailed(
 
     A `type` that is not a published event type is `422 validation_failed`
     with `param: "type"`. With no webhook URL configured for the key's mode
-    the answer is `409 webhook_endpoint_not_configured`.
+    the answer is `409 webhook_endpoint_not_configured`, unless you send
+    `deliver: false`: then the event is recorded and listed on
+    `GET /v1/events` and nothing is sent to a URL, so it needs none. It still
+    counts toward the thirty an hour.
 
     Args:
         body (SendTestWebhookRequest): Which event to send a sample of.
@@ -399,7 +408,10 @@ async def asyncio(
 
     A `type` that is not a published event type is `422 validation_failed`
     with `param: "type"`. With no webhook URL configured for the key's mode
-    the answer is `409 webhook_endpoint_not_configured`.
+    the answer is `409 webhook_endpoint_not_configured`, unless you send
+    `deliver: false`: then the event is recorded and listed on
+    `GET /v1/events` and nothing is sent to a URL, so it needs none. It still
+    counts toward the thirty an hour.
 
     Args:
         body (SendTestWebhookRequest): Which event to send a sample of.
