@@ -34,7 +34,10 @@ class CreateDeliveryRequest:
         store_id (str): The `st_` id of the store the courier collects from.
         external_id (str): Your own reference for this order. Echoed back as `external_id`.
         payment_method (CreateDeliveryRequestPaymentMethod): How the customer pays.
-        order_value_cents (int): The value of the order, in centavos.
+        order_value_cents (int): The value of the order, in centavos. A `prepaid` or `card` order
+            is refused with `422 order_value_over_cap` when this is above the
+            store's limit for that payment type (`order_value_limits` on the
+            store).
         dropoff (CreateDeliveryRequestDropoff): Where the order goes, and who receives it.
         quote_id (str | Unset): The `qt_` id of a quote to book at exactly its price. Without one
             the delivery is priced as it is created.

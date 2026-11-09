@@ -28,7 +28,10 @@ class CreateQuoteRequest:
         dropoff (CreateQuoteRequestDropoff): Where the order goes.
         payment_method (CreateQuoteRequestPaymentMethod | Unset): How the customer pays.
         order_value_cents (int | Unset): The value of the order, in centavos. Required for a `cash`
-            quote, where it is what the courier collects.
+            quote, where it is what the courier collects. A `prepaid` or
+            `card` quote, or one with no `payment_method`, is refused with
+            `422 order_value_over_cap` when this is above the store's limit
+            (`order_value_limits` on the store).
         business_fee_share (int | Unset): The percent of the delivery fee the store pays. Defaults to the store's own.
         business_fee_cap_cents (int | Unset): The most the store pays toward the fee, in centavos.
         pickup_ready_at (datetime.datetime | Unset): When the order will be ready, ISO-8601 in UTC. Must be in the

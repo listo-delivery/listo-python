@@ -186,6 +186,16 @@ def sync_detailed(
     fails until the plan is paid or restarted, or the cycle renews. See
     [Plan and billing](https://docs.listo.delivery/en/guides/plan-and-billing).
 
+    A `prepaid` or `card` order, or a quote with no `payment_method` (which
+    is judged as `prepaid`, because only a prepaid delivery can book it),
+    whose `order_value_cents` is above the store's limit for that payment
+    type is refused with `422 order_value_over_cap`, with `error.param`
+    `order_value_cents`, and nothing is created. The delivery fee does not
+    count toward the limit, and a value equal to it is accepted. The limits
+    are on the store, in `order_value_limits`. It is not `retryable`: send a
+    smaller order, or contact Listo to raise the store's limit. A `cash`
+    quote has its own limit and is refused with `cash_over_cap`.
+
     Args:
         body (CreateQuoteRequest): The trip to price.
 
@@ -309,6 +319,16 @@ def sync(
     fails until the plan is paid or restarted, or the cycle renews. See
     [Plan and billing](https://docs.listo.delivery/en/guides/plan-and-billing).
 
+    A `prepaid` or `card` order, or a quote with no `payment_method` (which
+    is judged as `prepaid`, because only a prepaid delivery can book it),
+    whose `order_value_cents` is above the store's limit for that payment
+    type is refused with `422 order_value_over_cap`, with `error.param`
+    `order_value_cents`, and nothing is created. The delivery fee does not
+    count toward the limit, and a value equal to it is accepted. The limits
+    are on the store, in `order_value_limits`. It is not `retryable`: send a
+    smaller order, or contact Listo to raise the store's limit. A `cash`
+    quote has its own limit and is refused with `cash_over_cap`.
+
     Args:
         body (CreateQuoteRequest): The trip to price.
 
@@ -426,6 +446,16 @@ async def asyncio_detailed(
     request couriers right now. It is not `retryable`: the identical call
     fails until the plan is paid or restarted, or the cycle renews. See
     [Plan and billing](https://docs.listo.delivery/en/guides/plan-and-billing).
+
+    A `prepaid` or `card` order, or a quote with no `payment_method` (which
+    is judged as `prepaid`, because only a prepaid delivery can book it),
+    whose `order_value_cents` is above the store's limit for that payment
+    type is refused with `422 order_value_over_cap`, with `error.param`
+    `order_value_cents`, and nothing is created. The delivery fee does not
+    count toward the limit, and a value equal to it is accepted. The limits
+    are on the store, in `order_value_limits`. It is not `retryable`: send a
+    smaller order, or contact Listo to raise the store's limit. A `cash`
+    quote has its own limit and is refused with `cash_over_cap`.
 
     Args:
         body (CreateQuoteRequest): The trip to price.
@@ -547,6 +577,16 @@ async def asyncio(
     request couriers right now. It is not `retryable`: the identical call
     fails until the plan is paid or restarted, or the cycle renews. See
     [Plan and billing](https://docs.listo.delivery/en/guides/plan-and-billing).
+
+    A `prepaid` or `card` order, or a quote with no `payment_method` (which
+    is judged as `prepaid`, because only a prepaid delivery can book it),
+    whose `order_value_cents` is above the store's limit for that payment
+    type is refused with `422 order_value_over_cap`, with `error.param`
+    `order_value_cents`, and nothing is created. The delivery fee does not
+    count toward the limit, and a value equal to it is accepted. The limits
+    are on the store, in `order_value_limits`. It is not `retryable`: send a
+    smaller order, or contact Listo to raise the store's limit. A `cash`
+    quote has its own limit and is refused with `cash_over_cap`.
 
     Args:
         body (CreateQuoteRequest): The trip to price.

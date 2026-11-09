@@ -264,6 +264,17 @@ def sync_detailed(
     `Idempotency-Key` creates the order. See
     [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
 
+    A `prepaid` or `card` order whose `order_value_cents` is above the
+    store's limit for that payment type is refused with `422
+    order_value_over_cap`, with `error.param` `order_value_cents`, and
+    nothing is created or debited. The delivery fee does not count toward
+    the limit, and a value equal to it is accepted. The limits are on the
+    store, in `order_value_limits`. A quote you bind is checked again, so a
+    quote priced under a higher limit can be refused here once that limit
+    has ended. It is not `retryable`: send a smaller order, or contact Listo
+    to raise the store's limit. A `cash` order has its own limit and is
+    refused with `cash_over_cap`.
+
     A dropoff beyond the store's 15 km service area is refused with `422
     out_of_service_area`, which is final. The courier network can also
     refuse the distance of a dropoff at the very edge of that circle, and
@@ -465,6 +476,17 @@ def sync(
     `Idempotency-Key` creates the order. See
     [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
 
+    A `prepaid` or `card` order whose `order_value_cents` is above the
+    store's limit for that payment type is refused with `422
+    order_value_over_cap`, with `error.param` `order_value_cents`, and
+    nothing is created or debited. The delivery fee does not count toward
+    the limit, and a value equal to it is accepted. The limits are on the
+    store, in `order_value_limits`. A quote you bind is checked again, so a
+    quote priced under a higher limit can be refused here once that limit
+    has ended. It is not `retryable`: send a smaller order, or contact Listo
+    to raise the store's limit. A `cash` order has its own limit and is
+    refused with `cash_over_cap`.
+
     A dropoff beyond the store's 15 km service area is refused with `422
     out_of_service_area`, which is final. The courier network can also
     refuse the distance of a dropoff at the very edge of that circle, and
@@ -660,6 +682,17 @@ async def asyncio_detailed(
     until `PATCH /v1/stores/{id}` switches the add-on on, and then the same
     `Idempotency-Key` creates the order. See
     [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
+
+    A `prepaid` or `card` order whose `order_value_cents` is above the
+    store's limit for that payment type is refused with `422
+    order_value_over_cap`, with `error.param` `order_value_cents`, and
+    nothing is created or debited. The delivery fee does not count toward
+    the limit, and a value equal to it is accepted. The limits are on the
+    store, in `order_value_limits`. A quote you bind is checked again, so a
+    quote priced under a higher limit can be refused here once that limit
+    has ended. It is not `retryable`: send a smaller order, or contact Listo
+    to raise the store's limit. A `cash` order has its own limit and is
+    refused with `cash_over_cap`.
 
     A dropoff beyond the store's 15 km service area is refused with `422
     out_of_service_area`, which is final. The courier network can also
@@ -859,6 +892,17 @@ async def asyncio(
     until `PATCH /v1/stores/{id}` switches the add-on on, and then the same
     `Idempotency-Key` creates the order. See
     [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
+
+    A `prepaid` or `card` order whose `order_value_cents` is above the
+    store's limit for that payment type is refused with `422
+    order_value_over_cap`, with `error.param` `order_value_cents`, and
+    nothing is created or debited. The delivery fee does not count toward
+    the limit, and a value equal to it is accepted. The limits are on the
+    store, in `order_value_limits`. A quote you bind is checked again, so a
+    quote priced under a higher limit can be refused here once that limit
+    has ended. It is not `retryable`: send a smaller order, or contact Listo
+    to raise the store's limit. A `cash` order has its own limit and is
+    refused with `cash_over_cap`.
 
     A dropoff beyond the store's 15 km service area is refused with `422
     out_of_service_area`, which is final. The courier network can also

@@ -144,6 +144,7 @@ from .store_connected_event import StoreConnectedEvent
 from .store_connected_event_type import StoreConnectedEventType
 from .store_default_fee_split_mode import StoreDefaultFeeSplitMode
 from .store_list import StoreList
+from .store_order_value_limits import StoreOrderValueLimits
 from .store_plan_type_0 import StorePlanType0
 from .store_plan_type_0_paid_by import StorePlanType0PaidBy
 from .store_plan_type_0_status import StorePlanType0Status
@@ -295,6 +296,7 @@ __all__ = (
     "StoreConnectedEventType",
     "StoreDefaultFeeSplitMode",
     "StoreList",
+    "StoreOrderValueLimits",
     "StorePlanType0",
     "StorePlanType0PaidBy",
     "StorePlanType0Status",

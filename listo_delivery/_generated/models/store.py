@@ -13,6 +13,7 @@ from ..models.store_default_fee_split_mode import StoreDefaultFeeSplitMode
 
 if TYPE_CHECKING:
     from ..models.store_add_ons_type_0 import StoreAddOnsType0
+    from ..models.store_order_value_limits import StoreOrderValueLimits
     from ..models.store_plan_type_0 import StorePlanType0
 
 
@@ -108,6 +109,11 @@ class Store:
                 Switch them on and off with `PATCH /v1/stores/{id}`. `wallet` and
                 `full_console` read `available: false` and cannot be switched on. See
                 [Store add-ons](https://docs.listo.delivery/en/guides/store-add-ons).
+            order_value_limits (StoreOrderValueLimits): The most an order may be worth at this store right now, per payment
+                type. A request above it is refused with `order_value_over_cap`
+                (prepaid and card) or `cash_over_cap` (cash). The limits can change
+                without a `store.updated` event, for example during a special limit,
+                so read them from the store when you need them.
     """
 
     id: str
@@ -130,6 +136,7 @@ class Store:
     created_at: datetime.datetime
     plan: None | StorePlanType0
     add_ons: None | StoreAddOnsType0
+    order_value_limits: StoreOrderValueLimits
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -190,6 +197,8 @@ class Store:
         else:
             add_ons = self.add_ons
 
+        order_value_limits = self.order_value_limits.to_dict()
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
         field_dict.update(
@@ -214,6 +223,7 @@ class Store:
                 "created_at": created_at,
                 "plan": plan,
                 "add_ons": add_ons,
+                "order_value_limits": order_value_limits,
             }
         )
 
@@ -222,6 +232,7 @@ class Store:
     @classmethod
     def from_dict(cls, src_dict: Mapping[str, Any]) -> Self:
         from ..models.store_add_ons_type_0 import StoreAddOnsType0
+        from ..models.store_order_value_limits import StoreOrderValueLimits
         from ..models.store_plan_type_0 import StorePlanType0
 
         d = dict(src_dict)
@@ -325,6 +336,10 @@ class Store:
 
         add_ons = _parse_add_ons(d.pop("add_ons"))
 
+        order_value_limits = StoreOrderValueLimits.from_dict(
+            d.pop("order_value_limits")
+        )
+
         store = cls(
             id=id,
             external_id=external_id,
@@ -346,6 +361,7 @@ class Store:
             created_at=created_at,
             plan=plan,
             add_ons=add_ons,
+            order_value_limits=order_value_limits,
         )
 
         store.additional_properties = d
