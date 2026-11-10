@@ -285,6 +285,15 @@ def sync_detailed(
     full and nothing else charged; replaying the request answers the same
     `422`. Send that order to another address under a new `external_id`.
 
+    A dropoff the courier network does not serve at all, whatever its
+    distance from the store, is refused with the same final `422
+    out_of_service_area` whenever the create prices the trip. That includes
+    a create that binds a quote but has to price it again (a cash order,
+    or a quote whose courier price can no longer be booked as it stands).
+    Only a create that books the bound quote's courier price as it stands
+    meets that refusal at dispatch, after the delivery was recorded, and
+    it answers `201` with the delivery ended at `no_courier`.
+
     Args:
         idempotency_key (str):
         body (CreateDeliveryRequest): The order to dispatch.
@@ -497,6 +506,15 @@ def sync(
     full and nothing else charged; replaying the request answers the same
     `422`. Send that order to another address under a new `external_id`.
 
+    A dropoff the courier network does not serve at all, whatever its
+    distance from the store, is refused with the same final `422
+    out_of_service_area` whenever the create prices the trip. That includes
+    a create that binds a quote but has to price it again (a cash order,
+    or a quote whose courier price can no longer be booked as it stands).
+    Only a create that books the bound quote's courier price as it stands
+    meets that refusal at dispatch, after the delivery was recorded, and
+    it answers `201` with the delivery ended at `no_courier`.
+
     Args:
         idempotency_key (str):
         body (CreateDeliveryRequest): The order to dispatch.
@@ -703,6 +721,15 @@ async def asyncio_detailed(
     delivery_failed` under your `external_id`, its fee debit returned in
     full and nothing else charged; replaying the request answers the same
     `422`. Send that order to another address under a new `external_id`.
+
+    A dropoff the courier network does not serve at all, whatever its
+    distance from the store, is refused with the same final `422
+    out_of_service_area` whenever the create prices the trip. That includes
+    a create that binds a quote but has to price it again (a cash order,
+    or a quote whose courier price can no longer be booked as it stands).
+    Only a create that books the bound quote's courier price as it stands
+    meets that refusal at dispatch, after the delivery was recorded, and
+    it answers `201` with the delivery ended at `no_courier`.
 
     Args:
         idempotency_key (str):
@@ -913,6 +940,15 @@ async def asyncio(
     delivery_failed` under your `external_id`, its fee debit returned in
     full and nothing else charged; replaying the request answers the same
     `422`. Send that order to another address under a new `external_id`.
+
+    A dropoff the courier network does not serve at all, whatever its
+    distance from the store, is refused with the same final `422
+    out_of_service_area` whenever the create prices the trip. That includes
+    a create that binds a quote but has to price it again (a cash order,
+    or a quote whose courier price can no longer be booked as it stands).
+    Only a create that books the bound quote's courier price as it stands
+    meets that refusal at dispatch, after the delivery was recorded, and
+    it answers `201` with the delivery ended at `no_courier`.
 
     Args:
         idempotency_key (str):

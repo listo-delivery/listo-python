@@ -152,6 +152,11 @@ def sync_detailed(
     will only meet it on a store you positioned yourself, with `lat`/`lng`,
     since a store we located is refused when you create it.
 
+    A dropoff beyond the store's 15 km service area, or one the courier
+    network does not serve at all, whatever its distance from the store, is
+    refused with `422 out_of_service_area`, which is final: send the order
+    to another address.
+
     A store whose pickup point we cannot currently vouch for is refused
     with `409 pickup_point_pending`, because until it is confirmed a courier
     could be sent to the wrong place. Usually the store's address has just
@@ -285,6 +290,11 @@ def sync(
     will only meet it on a store you positioned yourself, with `lat`/`lng`,
     since a store we located is refused when you create it.
 
+    A dropoff beyond the store's 15 km service area, or one the courier
+    network does not serve at all, whatever its distance from the store, is
+    refused with `422 out_of_service_area`, which is final: send the order
+    to another address.
+
     A store whose pickup point we cannot currently vouch for is refused
     with `409 pickup_point_pending`, because until it is confirmed a courier
     could be sent to the wrong place. Usually the store's address has just
@@ -412,6 +422,11 @@ async def asyncio_detailed(
     `provider_unavailable`, and no retry of the same store can succeed. You
     will only meet it on a store you positioned yourself, with `lat`/`lng`,
     since a store we located is refused when you create it.
+
+    A dropoff beyond the store's 15 km service area, or one the courier
+    network does not serve at all, whatever its distance from the store, is
+    refused with `422 out_of_service_area`, which is final: send the order
+    to another address.
 
     A store whose pickup point we cannot currently vouch for is refused
     with `409 pickup_point_pending`, because until it is confirmed a courier
@@ -543,6 +558,11 @@ async def asyncio(
     `provider_unavailable`, and no retry of the same store can succeed. You
     will only meet it on a store you positioned yourself, with `lat`/`lng`,
     since a store we located is refused when you create it.
+
+    A dropoff beyond the store's 15 km service area, or one the courier
+    network does not serve at all, whatever its distance from the store, is
+    refused with `422 out_of_service_area`, which is final: send the order
+    to another address.
 
     A store whose pickup point we cannot currently vouch for is refused
     with `409 pickup_point_pending`, because until it is confirmed a courier
