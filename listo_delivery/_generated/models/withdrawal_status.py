@@ -5,6 +5,7 @@ from enum import StrEnum
 # one new value into a parse failure for the whole response. An unknown value
 # comes back as a member carrying that exact string instead.
 class WithdrawalStatus(StrEnum):
+    CANCELED = "canceled"
     FAILED = "failed"
     PAID = "paid"
     PENDING = "pending"

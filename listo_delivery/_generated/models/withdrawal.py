@@ -30,21 +30,29 @@ class Withdrawal:
             to 3 business days. `same_day` costs `fee_cents`, can reach cash
             still on hold, and is sent the same day within the hours in
             `POST /v1/withdrawals`.
-        status (WithdrawalStatus): `pending` until a human settles it. The move to `paid` or `failed`
-            is what `withdrawal.updated` announces.
+        status (WithdrawalStatus): `pending` until a human settles it. The move to `paid`, `failed` or
+            `canceled` is what `withdrawal.updated` announces.
+
+            `canceled` means nothing reached your bank: the request was stopped
+            before any transfer was sent, and the amount and any same-day fee
+            are back in `available_cents`. It happens only when your account
+            asked Listo to cancel the withdrawal. A client that switches on
+            `status` must handle it.
         requested_at (datetime.datetime | None):
         due_at (datetime.datetime | None): When a `same_day` withdrawal is due to have been sent, stamped when
             you requested it and never recalculated afterwards. Null on every
             `standard` withdrawal: the free path promises a range of business
             days rather than an instant.
-        resolved_at (datetime.datetime | None): Null while still pending.
+        resolved_at (datetime.datetime | None): Null while still pending. Set when the withdrawal was paid, failed
+            or canceled, to the moment that happened.
         clave_de_rastreo (None | str): The SPEI tracking key for the transfer: the identifier your own bank
             uses to locate the deposit. This is what you reconcile a payout
             against a bank statement with, and it is the same key you see in the
             dashboard for this withdrawal.
 
             Always present, null until the transfer is sent. It stays null
-            forever on a `failed` withdrawal, because no transfer happened.
+            forever on a `failed` or `canceled` withdrawal, because no transfer
+            happened.
              Example: MBAN01002608120001234567.
         test (bool):
     """
