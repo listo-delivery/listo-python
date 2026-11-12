@@ -168,6 +168,11 @@ def sync_detailed(
     `null`) and the restaurant buys its own Plan Listo in its Listo console.
     Its deliveries are refused with `402 plan_required` until it does.
 
+    If your account is on Listo's self-serve pricing, the store you create
+    carries no Plan Listo: it is created with no plan (`plan` is `null`),
+    nothing is charged for a plan, and its deliveries are not refused for
+    lack of one. You pay for each trip and for the add-ons you switch on.
+
     A test store has no plan.
 
     Args:
@@ -284,6 +289,11 @@ def sync(
     `null`) and the restaurant buys its own Plan Listo in its Listo console.
     Its deliveries are refused with `402 plan_required` until it does.
 
+    If your account is on Listo's self-serve pricing, the store you create
+    carries no Plan Listo: it is created with no plan (`plan` is `null`),
+    nothing is charged for a plan, and its deliveries are not refused for
+    lack of one. You pay for each trip and for the add-ons you switch on.
+
     A test store has no plan.
 
     Args:
@@ -394,6 +404,11 @@ async def asyncio_detailed(
     nothing is charged to you: the store is created with no plan (`plan` is
     `null`) and the restaurant buys its own Plan Listo in its Listo console.
     Its deliveries are refused with `402 plan_required` until it does.
+
+    If your account is on Listo's self-serve pricing, the store you create
+    carries no Plan Listo: it is created with no plan (`plan` is `null`),
+    nothing is charged for a plan, and its deliveries are not refused for
+    lack of one. You pay for each trip and for the add-ons you switch on.
 
     A test store has no plan.
 
@@ -508,6 +523,11 @@ async def asyncio(
     nothing is charged to you: the store is created with no plan (`plan` is
     `null`) and the restaurant buys its own Plan Listo in its Listo console.
     Its deliveries are refused with `402 plan_required` until it does.
+
+    If your account is on Listo's self-serve pricing, the store you create
+    carries no Plan Listo: it is created with no plan (`plan` is `null`),
+    nothing is charged for a plan, and its deliveries are not refused for
+    lack of one. You pay for each trip and for the add-ons you switch on.
 
     A test store has no plan.
 
