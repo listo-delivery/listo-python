@@ -1,4 +1,4 @@
 # Generated from Listo's API definition. Do not edit.
 
-SDK_VERSION = "0.13.0"
-API_VERSION = "1.49.0"
+SDK_VERSION = "0.14.0"
+API_VERSION = "1.50.0"

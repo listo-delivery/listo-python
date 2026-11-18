@@ -22,6 +22,8 @@ from ._generated.models import (
     DeliveryList,
     EventList,
     LedgerEntryList,
+    Order,
+    OrderList,
     OwnerInvitation,
     Ping,
     Quote,
@@ -193,6 +195,16 @@ OPERATIONS: dict[str, Operation] = {
         idempotent=False,
         parse=parse_event_response,
     ),
+    "getOrder": Operation(
+        operation_id="getOrder",
+        method="GET",
+        path="/v1/orders/{id}",
+        path_params=("id",),
+        has_body=False,
+        body_required=False,
+        idempotent=False,
+        parse=Order.from_dict,
+    ),
     "getRequestLog": Operation(
         operation_id="getRequestLog",
         method="GET",
@@ -272,6 +284,16 @@ OPERATIONS: dict[str, Operation] = {
         body_required=False,
         idempotent=False,
         parse=LedgerEntryList.from_dict,
+    ),
+    "listOrders": Operation(
+        operation_id="listOrders",
+        method="GET",
+        path="/v1/orders",
+        path_params=(),
+        has_body=False,
+        body_required=False,
+        idempotent=False,
+        parse=OrderList.from_dict,
     ),
     "listRequestLogs": Operation(
         operation_id="listRequestLogs",
@@ -573,6 +595,18 @@ class LedgerResource(Resource):
         )
 
 
+class OrdersResource(Resource):
+    """Operations under ``client.orders``."""
+
+    def list(self, query: Mapping[str, Any] | None = None) -> OrderList:
+        """List orders (``GET /v1/orders``)."""
+        return self._client._execute(OPERATIONS["listOrders"], (), None, query, None)
+
+    def retrieve(self, id: str) -> Order:
+        """Get an order (``GET /v1/orders/{id}``)."""
+        return self._client._execute(OPERATIONS["getOrder"], (id,), None, None, None)
+
+
 class QuotesResource(Resource):
     """Operations under ``client.quotes``."""
 
@@ -714,6 +748,7 @@ RESOURCES: dict[str, type[Resource]] = {
     "deliveries": DeliveriesResource,
     "events": EventsResource,
     "ledger": LedgerResource,
+    "orders": OrdersResource,
     "quotes": QuotesResource,
     "request_logs": RequestLogsResource,
     "stores": StoresResource,

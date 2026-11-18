@@ -6,10 +6,12 @@ from enum import StrEnum
 # comes back as a member carrying that exact string instead.
 class WebhookDeliveryEventType(StrEnum):
     DELIVERY_COURIER_LOCATION = "delivery.courier_location"
+    DELIVERY_CREATED = "delivery.created"
     DELIVERY_MESSAGE_SKIPPED = "delivery.message_skipped"
     DELIVERY_RATED = "delivery.rated"
     DELIVERY_STATUS_CHANGED = "delivery.status_changed"
     DELIVERY_UPDATED = "delivery.updated"
+    ORDER_STATUS_CHANGED = "order.status_changed"
     STORE_CONNECTED = "store.connected"
     STORE_UPDATED = "store.updated"
     WITHDRAWAL_UPDATED = "withdrawal.updated"

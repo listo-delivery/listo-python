@@ -15,6 +15,7 @@ def _get_kwargs(
     *,
     type_: ListEventsType | Unset = UNSET,
     delivery_id: str | Unset = UNSET,
+    order_id: str | Unset = UNSET,
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
@@ -29,6 +30,8 @@ def _get_kwargs(
     params["type"] = json_type_
 
     params["delivery_id"] = delivery_id
+
+    params["order_id"] = order_id
 
     params["created_after"] = created_after
 
@@ -82,6 +85,7 @@ def sync_detailed(
     client: AuthenticatedClient,
     type_: ListEventsType | Unset = UNSET,
     delivery_id: str | Unset = UNSET,
+    order_id: str | Unset = UNSET,
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
@@ -96,7 +100,8 @@ def sync_detailed(
     carries `test: true`.
 
     Filter by `type`, `delivery_id` (the events about one delivery),
-    `created_after` and `created_before`. `delivery.courier_location` is
+    `order_id` (the events about one order), `created_after` and
+    `created_before`. `delivery.courier_location` is
     left out of an unfiltered list: it is emitted about every twenty seconds
     for every trip on the road and is never sent again, so it would bury
     everything else. Ask for it with `type=delivery.courier_location`.
@@ -107,6 +112,7 @@ def sync_detailed(
     Args:
         type_ (ListEventsType | Unset):
         delivery_id (str | Unset):
+        order_id (str | Unset):
         created_after (str | Unset):
         created_before (str | Unset):
         cursor (str | Unset):
@@ -122,6 +128,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         type_=type_,
         delivery_id=delivery_id,
+        order_id=order_id,
         created_after=created_after,
         created_before=created_before,
         cursor=cursor,
@@ -139,6 +146,7 @@ def sync(
     client: AuthenticatedClient,
     type_: ListEventsType | Unset = UNSET,
     delivery_id: str | Unset = UNSET,
+    order_id: str | Unset = UNSET,
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
@@ -153,7 +161,8 @@ def sync(
     carries `test: true`.
 
     Filter by `type`, `delivery_id` (the events about one delivery),
-    `created_after` and `created_before`. `delivery.courier_location` is
+    `order_id` (the events about one order), `created_after` and
+    `created_before`. `delivery.courier_location` is
     left out of an unfiltered list: it is emitted about every twenty seconds
     for every trip on the road and is never sent again, so it would bury
     everything else. Ask for it with `type=delivery.courier_location`.
@@ -164,6 +173,7 @@ def sync(
     Args:
         type_ (ListEventsType | Unset):
         delivery_id (str | Unset):
+        order_id (str | Unset):
         created_after (str | Unset):
         created_before (str | Unset):
         cursor (str | Unset):
@@ -180,6 +190,7 @@ def sync(
         client=client,
         type_=type_,
         delivery_id=delivery_id,
+        order_id=order_id,
         created_after=created_after,
         created_before=created_before,
         cursor=cursor,
@@ -191,6 +202,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     type_: ListEventsType | Unset = UNSET,
     delivery_id: str | Unset = UNSET,
+    order_id: str | Unset = UNSET,
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
@@ -205,7 +217,8 @@ async def asyncio_detailed(
     carries `test: true`.
 
     Filter by `type`, `delivery_id` (the events about one delivery),
-    `created_after` and `created_before`. `delivery.courier_location` is
+    `order_id` (the events about one order), `created_after` and
+    `created_before`. `delivery.courier_location` is
     left out of an unfiltered list: it is emitted about every twenty seconds
     for every trip on the road and is never sent again, so it would bury
     everything else. Ask for it with `type=delivery.courier_location`.
@@ -216,6 +229,7 @@ async def asyncio_detailed(
     Args:
         type_ (ListEventsType | Unset):
         delivery_id (str | Unset):
+        order_id (str | Unset):
         created_after (str | Unset):
         created_before (str | Unset):
         cursor (str | Unset):
@@ -231,6 +245,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         type_=type_,
         delivery_id=delivery_id,
+        order_id=order_id,
         created_after=created_after,
         created_before=created_before,
         cursor=cursor,
@@ -246,6 +261,7 @@ async def asyncio(
     client: AuthenticatedClient,
     type_: ListEventsType | Unset = UNSET,
     delivery_id: str | Unset = UNSET,
+    order_id: str | Unset = UNSET,
     created_after: str | Unset = UNSET,
     created_before: str | Unset = UNSET,
     cursor: str | Unset = UNSET,
@@ -260,7 +276,8 @@ async def asyncio(
     carries `test: true`.
 
     Filter by `type`, `delivery_id` (the events about one delivery),
-    `created_after` and `created_before`. `delivery.courier_location` is
+    `order_id` (the events about one order), `created_after` and
+    `created_before`. `delivery.courier_location` is
     left out of an unfiltered list: it is emitted about every twenty seconds
     for every trip on the road and is never sent again, so it would bury
     everything else. Ask for it with `type=delivery.courier_location`.
@@ -271,6 +288,7 @@ async def asyncio(
     Args:
         type_ (ListEventsType | Unset):
         delivery_id (str | Unset):
+        order_id (str | Unset):
         created_after (str | Unset):
         created_before (str | Unset):
         cursor (str | Unset):
@@ -288,6 +306,7 @@ async def asyncio(
             client=client,
             type_=type_,
             delivery_id=delivery_id,
+            order_id=order_id,
             created_after=created_after,
             created_before=created_before,
             cursor=cursor,
