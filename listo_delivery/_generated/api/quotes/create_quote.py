@@ -183,8 +183,12 @@ def sync_detailed(
     courier carries in `failure_reason`.
 
     A live store whose Plan Listo is not paid up is refused with `402
-    plan_required`, because the create would refuse the delivery this
-    quote prices. `error.message` names the reason: no active plan, a
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), because the
+    create would refuse the delivery this quote prices. `error.message` names the reason: no active
+    plan, a
     charge that is pending, a plan that ended on a given date, a plan whose
     included deliveries for the cycle are all used, or a store that cannot
     request couriers right now. It is not `retryable`: the identical call
@@ -321,8 +325,12 @@ def sync(
     courier carries in `failure_reason`.
 
     A live store whose Plan Listo is not paid up is refused with `402
-    plan_required`, because the create would refuse the delivery this
-    quote prices. `error.message` names the reason: no active plan, a
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), because the
+    create would refuse the delivery this quote prices. `error.message` names the reason: no active
+    plan, a
     charge that is pending, a plan that ended on a given date, a plan whose
     included deliveries for the cycle are all used, or a store that cannot
     request couriers right now. It is not `retryable`: the identical call
@@ -454,8 +462,12 @@ async def asyncio_detailed(
     courier carries in `failure_reason`.
 
     A live store whose Plan Listo is not paid up is refused with `402
-    plan_required`, because the create would refuse the delivery this
-    quote prices. `error.message` names the reason: no active plan, a
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), because the
+    create would refuse the delivery this quote prices. `error.message` names the reason: no active
+    plan, a
     charge that is pending, a plan that ended on a given date, a plan whose
     included deliveries for the cycle are all used, or a store that cannot
     request couriers right now. It is not `retryable`: the identical call
@@ -590,8 +602,12 @@ async def asyncio(
     courier carries in `failure_reason`.
 
     A live store whose Plan Listo is not paid up is refused with `402
-    plan_required`, because the create would refuse the delivery this
-    quote prices. `error.message` names the reason: no active plan, a
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), because the
+    create would refuse the delivery this quote prices. `error.message` names the reason: no active
+    plan, a
     charge that is pending, a plan that ended on a given date, a plan whose
     included deliveries for the cycle are all used, or a store that cannot
     request couriers right now. It is not `retryable`: the identical call

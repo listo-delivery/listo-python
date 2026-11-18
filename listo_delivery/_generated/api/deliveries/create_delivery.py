@@ -247,7 +247,11 @@ def sync_detailed(
     refusal.
 
     A live store whose Plan Listo is not paid up is refused with `402
-    plan_required`, and nothing is dispatched or debited. It is a different
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), and nothing is
+    dispatched or debited. It is a different
     refusal from `402 insufficient_balance`, which is about your balance:
     read `error.code`, never the status alone. `error.message` names the
     reason (no active plan, a charge that is pending, a plan that ended on a
@@ -468,7 +472,11 @@ def sync(
     refusal.
 
     A live store whose Plan Listo is not paid up is refused with `402
-    plan_required`, and nothing is dispatched or debited. It is a different
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), and nothing is
+    dispatched or debited. It is a different
     refusal from `402 insufficient_balance`, which is about your balance:
     read `error.code`, never the status alone. `error.message` names the
     reason (no active plan, a charge that is pending, a plan that ended on a
@@ -684,7 +692,11 @@ async def asyncio_detailed(
     refusal.
 
     A live store whose Plan Listo is not paid up is refused with `402
-    plan_required`, and nothing is dispatched or debited. It is a different
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), and nothing is
+    dispatched or debited. It is a different
     refusal from `402 insufficient_balance`, which is about your balance:
     read `error.code`, never the status alone. `error.message` names the
     reason (no active plan, a charge that is pending, a plan that ended on a
@@ -903,7 +915,11 @@ async def asyncio(
     refusal.
 
     A live store whose Plan Listo is not paid up is refused with `402
-    plan_required`, and nothing is dispatched or debited. It is a different
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), and nothing is
+    dispatched or debited. It is a different
     refusal from `402 insufficient_balance`, which is about your balance:
     read `error.code`, never the status alone. `error.message` names the
     reason (no active plan, a charge that is pending, a plan that ended on a

@@ -102,7 +102,11 @@ def sync_detailed(
     undone with `DELETE /v1/stores/{store_id}/plan_cancellation`, and a
     `past_due` one starts again when its charge goes through, and a store
     whose first month is still `awaiting_payment` is charged by itself as
-    soon as your balance or card covers it. It also
+    soon as your balance or card covers it (unless Listo granted your
+    account live trial deliveries and the store has never had a paid plan,
+    in which case the store requests couriers until they are used, and is
+    then charged as any first month; a store whose plan ended and is
+    restarted is charged, or waits for funds, as it always has). It also
     answers when the restaurant pays its own plan, which it buys in its own
     console and is not yours to reactivate. `409
     charge_in_progress`, which is `retryable`, while a card charge for the
@@ -155,7 +159,11 @@ def sync(
     undone with `DELETE /v1/stores/{store_id}/plan_cancellation`, and a
     `past_due` one starts again when its charge goes through, and a store
     whose first month is still `awaiting_payment` is charged by itself as
-    soon as your balance or card covers it. It also
+    soon as your balance or card covers it (unless Listo granted your
+    account live trial deliveries and the store has never had a paid plan,
+    in which case the store requests couriers until they are used, and is
+    then charged as any first month; a store whose plan ended and is
+    restarted is charged, or waits for funds, as it always has). It also
     answers when the restaurant pays its own plan, which it buys in its own
     console and is not yours to reactivate. `409
     charge_in_progress`, which is `retryable`, while a card charge for the
@@ -203,7 +211,11 @@ async def asyncio_detailed(
     undone with `DELETE /v1/stores/{store_id}/plan_cancellation`, and a
     `past_due` one starts again when its charge goes through, and a store
     whose first month is still `awaiting_payment` is charged by itself as
-    soon as your balance or card covers it. It also
+    soon as your balance or card covers it (unless Listo granted your
+    account live trial deliveries and the store has never had a paid plan,
+    in which case the store requests couriers until they are used, and is
+    then charged as any first month; a store whose plan ended and is
+    restarted is charged, or waits for funds, as it always has). It also
     answers when the restaurant pays its own plan, which it buys in its own
     console and is not yours to reactivate. `409
     charge_in_progress`, which is `retryable`, while a card charge for the
@@ -254,7 +266,11 @@ async def asyncio(
     undone with `DELETE /v1/stores/{store_id}/plan_cancellation`, and a
     `past_due` one starts again when its charge goes through, and a store
     whose first month is still `awaiting_payment` is charged by itself as
-    soon as your balance or card covers it. It also
+    soon as your balance or card covers it (unless Listo granted your
+    account live trial deliveries and the store has never had a paid plan,
+    in which case the store requests couriers until they are used, and is
+    then charged as any first month; a store whose plan ended and is
+    restarted is charged, or waits for funds, as it always has). It also
     answers when the restaurant pays its own plan, which it buys in its own
     console and is not yours to reactivate. `409
     charge_in_progress`, which is `retryable`, while a card charge for the

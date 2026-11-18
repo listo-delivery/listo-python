@@ -83,7 +83,11 @@ def sync_detailed(
 
     A retry is a new dispatch, so it asks the store's Plan Listo again: a
     live store whose plan is not paid up is refused with `402
-    plan_required`, exactly as the create is.
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), exactly as the
+    create is.
 
     A retry the courier network refuses for its distance, at the very edge
     of the store's 15 km service area, answers `422 out_of_service_area`,
@@ -126,7 +130,11 @@ def sync(
 
     A retry is a new dispatch, so it asks the store's Plan Listo again: a
     live store whose plan is not paid up is refused with `402
-    plan_required`, exactly as the create is.
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), exactly as the
+    create is.
 
     A retry the courier network refuses for its distance, at the very edge
     of the store's 15 km service area, answers `422 out_of_service_area`,
@@ -164,7 +172,11 @@ async def asyncio_detailed(
 
     A retry is a new dispatch, so it asks the store's Plan Listo again: a
     live store whose plan is not paid up is refused with `402
-    plan_required`, exactly as the create is.
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), exactly as the
+    create is.
 
     A retry the courier network refuses for its distance, at the very edge
     of the store's 15 km service area, answers `422 out_of_service_area`,
@@ -205,7 +217,11 @@ async def asyncio(
 
     A retry is a new dispatch, so it asks the store's Plan Listo again: a
     live store whose plan is not paid up is refused with `402
-    plan_required`, exactly as the create is.
+    plan_required` (unless Listo granted your account live trial
+    deliveries and the store has never had a paid plan and is still waiting
+    for its first charge, in which case it requests couriers until they
+    are used), exactly as the
+    create is.
 
     A retry the courier network refuses for its distance, at the very edge
     of the store's 15 km service area, answers `422 out_of_service_area`,

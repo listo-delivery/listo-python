@@ -152,16 +152,25 @@ def sync_detailed(
     pays it on your account (see
     [Plan and billing](https://docs.listo.delivery/en/guides/plan-and-billing)).
 
-    If you pay your stores' plans, the store starts its Plan Listo and its
-    first month is charged to you in this same request, from your live
-    balance or from the card saved on your account. Fund one of them first,
-    and send an `Idempotency-Key` on every live create: a create that timed
-    out and is repeated without one makes a second store, and the second
-    store starts a second plan. A store whose first charge fails is still
-    created and still answers `201`, with `plan.status` `awaiting_payment`:
-    it has no plan yet, nothing is past due, and its deliveries are refused
-    with `402 plan_required` until your balance or card covers the month,
-    which Listo then charges by itself.
+    If you pay your stores' plans, the store starts its Plan Listo. Unless
+    Listo granted your account live trial deliveries and you still have
+    some left, its first month is charged to you in this same request, from
+    your live balance or from the card saved on your account. If you do
+    have some left, the first charge waits until they are used, even when
+    your balance or card would cover it, and the store requests couriers
+    in the meantime. Fund your balance or save a card first, and send an
+    `Idempotency-Key` on every live create: a create that timed out and is
+    repeated without one makes a second store, and the second store starts
+    a second plan. A store whose first charge fails, or waits for the
+    trial, is still created and still answers `201`, with `plan.status`
+    `awaiting_payment`: it has no plan yet, nothing is past due, and its
+    deliveries are refused with `402 plan_required` until your balance or
+    card covers the month, which Listo then charges by itself (unless Listo
+    granted your account live trial deliveries and the store has never had
+    a paid plan, which a new store has not, in which case the store
+    requests couriers until they are used, and is then charged as any
+    first month: if neither your balance nor your card covers it, the store
+    waits as before).
 
     If your account is set up so that each restaurant pays its own plan,
     nothing is charged to you: the store is created with no plan (`plan` is
@@ -273,16 +282,25 @@ def sync(
     pays it on your account (see
     [Plan and billing](https://docs.listo.delivery/en/guides/plan-and-billing)).
 
-    If you pay your stores' plans, the store starts its Plan Listo and its
-    first month is charged to you in this same request, from your live
-    balance or from the card saved on your account. Fund one of them first,
-    and send an `Idempotency-Key` on every live create: a create that timed
-    out and is repeated without one makes a second store, and the second
-    store starts a second plan. A store whose first charge fails is still
-    created and still answers `201`, with `plan.status` `awaiting_payment`:
-    it has no plan yet, nothing is past due, and its deliveries are refused
-    with `402 plan_required` until your balance or card covers the month,
-    which Listo then charges by itself.
+    If you pay your stores' plans, the store starts its Plan Listo. Unless
+    Listo granted your account live trial deliveries and you still have
+    some left, its first month is charged to you in this same request, from
+    your live balance or from the card saved on your account. If you do
+    have some left, the first charge waits until they are used, even when
+    your balance or card would cover it, and the store requests couriers
+    in the meantime. Fund your balance or save a card first, and send an
+    `Idempotency-Key` on every live create: a create that timed out and is
+    repeated without one makes a second store, and the second store starts
+    a second plan. A store whose first charge fails, or waits for the
+    trial, is still created and still answers `201`, with `plan.status`
+    `awaiting_payment`: it has no plan yet, nothing is past due, and its
+    deliveries are refused with `402 plan_required` until your balance or
+    card covers the month, which Listo then charges by itself (unless Listo
+    granted your account live trial deliveries and the store has never had
+    a paid plan, which a new store has not, in which case the store
+    requests couriers until they are used, and is then charged as any
+    first month: if neither your balance nor your card covers it, the store
+    waits as before).
 
     If your account is set up so that each restaurant pays its own plan,
     nothing is charged to you: the store is created with no plan (`plan` is
@@ -389,16 +407,25 @@ async def asyncio_detailed(
     pays it on your account (see
     [Plan and billing](https://docs.listo.delivery/en/guides/plan-and-billing)).
 
-    If you pay your stores' plans, the store starts its Plan Listo and its
-    first month is charged to you in this same request, from your live
-    balance or from the card saved on your account. Fund one of them first,
-    and send an `Idempotency-Key` on every live create: a create that timed
-    out and is repeated without one makes a second store, and the second
-    store starts a second plan. A store whose first charge fails is still
-    created and still answers `201`, with `plan.status` `awaiting_payment`:
-    it has no plan yet, nothing is past due, and its deliveries are refused
-    with `402 plan_required` until your balance or card covers the month,
-    which Listo then charges by itself.
+    If you pay your stores' plans, the store starts its Plan Listo. Unless
+    Listo granted your account live trial deliveries and you still have
+    some left, its first month is charged to you in this same request, from
+    your live balance or from the card saved on your account. If you do
+    have some left, the first charge waits until they are used, even when
+    your balance or card would cover it, and the store requests couriers
+    in the meantime. Fund your balance or save a card first, and send an
+    `Idempotency-Key` on every live create: a create that timed out and is
+    repeated without one makes a second store, and the second store starts
+    a second plan. A store whose first charge fails, or waits for the
+    trial, is still created and still answers `201`, with `plan.status`
+    `awaiting_payment`: it has no plan yet, nothing is past due, and its
+    deliveries are refused with `402 plan_required` until your balance or
+    card covers the month, which Listo then charges by itself (unless Listo
+    granted your account live trial deliveries and the store has never had
+    a paid plan, which a new store has not, in which case the store
+    requests couriers until they are used, and is then charged as any
+    first month: if neither your balance nor your card covers it, the store
+    waits as before).
 
     If your account is set up so that each restaurant pays its own plan,
     nothing is charged to you: the store is created with no plan (`plan` is
@@ -508,16 +535,25 @@ async def asyncio(
     pays it on your account (see
     [Plan and billing](https://docs.listo.delivery/en/guides/plan-and-billing)).
 
-    If you pay your stores' plans, the store starts its Plan Listo and its
-    first month is charged to you in this same request, from your live
-    balance or from the card saved on your account. Fund one of them first,
-    and send an `Idempotency-Key` on every live create: a create that timed
-    out and is repeated without one makes a second store, and the second
-    store starts a second plan. A store whose first charge fails is still
-    created and still answers `201`, with `plan.status` `awaiting_payment`:
-    it has no plan yet, nothing is past due, and its deliveries are refused
-    with `402 plan_required` until your balance or card covers the month,
-    which Listo then charges by itself.
+    If you pay your stores' plans, the store starts its Plan Listo. Unless
+    Listo granted your account live trial deliveries and you still have
+    some left, its first month is charged to you in this same request, from
+    your live balance or from the card saved on your account. If you do
+    have some left, the first charge waits until they are used, even when
+    your balance or card would cover it, and the store requests couriers
+    in the meantime. Fund your balance or save a card first, and send an
+    `Idempotency-Key` on every live create: a create that timed out and is
+    repeated without one makes a second store, and the second store starts
+    a second plan. A store whose first charge fails, or waits for the
+    trial, is still created and still answers `201`, with `plan.status`
+    `awaiting_payment`: it has no plan yet, nothing is past due, and its
+    deliveries are refused with `402 plan_required` until your balance or
+    card covers the month, which Listo then charges by itself (unless Listo
+    granted your account live trial deliveries and the store has never had
+    a paid plan, which a new store has not, in which case the store
+    requests couriers until they are used, and is then charged as any
+    first month: if neither your balance nor your card covers it, the store
+    waits as before).
 
     If your account is set up so that each restaurant pays its own plan,
     nothing is charged to you: the store is created with no plan (`plan` is
