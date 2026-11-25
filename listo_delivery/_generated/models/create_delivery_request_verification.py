@@ -16,7 +16,9 @@ class CreateDeliveryRequestVerification:
     """Proof the customer must give the courier.
 
     Attributes:
-        dropoff_pincode (bool | Unset): True to require a code at the door. Defaults to false.
+        dropoff_pincode (bool | Unset): True to require a code at the door. Defaults to false. An order
+            whose `order_value_cents` is above $1,000 always carries the
+            code, even when this is false or left out.
     """
 
     dropoff_pincode: bool | Unset = UNSET

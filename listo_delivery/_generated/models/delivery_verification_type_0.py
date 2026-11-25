@@ -12,9 +12,10 @@ T = TypeVar("T", bound="DeliveryVerificationType0")
 @_attrs_define
 class DeliveryVerificationType0:
     """Present only when the order carries a dropoff PIN: when you asked
-    for one (`verification.dropoff_pincode` on the create), or when
-    Listo requires a PIN on every delivery of this store's account, in
-    which case it is present even though you did not ask. `pincode` is
+    for one (`verification.dropoff_pincode` on the create), when
+    Listo requires a PIN on every delivery of this store's account, or
+    when `order_value_cents` is above $1,000, which always carries one;
+    in the last two cases it is present even though you did not ask. `pincode` is
     null until the order is actually dispatched, which is when the code
     is minted.
 

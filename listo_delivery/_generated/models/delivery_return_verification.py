@@ -21,7 +21,9 @@ class DeliveryReturnVerification:
     arrives in `delivery.status_changed` (the move into `returning`) and
     in `delivery.updated`, which carry the whole object. A new attempt
     (a retry) gets its own code. Show it to the store, and never to the
-    customer.
+    customer. An order whose `order_value_cents` is above $1,000 always
+    carries a return code, even when your Partner has the return code
+    switched off.
 
         Attributes:
             pincode (None | str):  Example: 4821.
