@@ -20,8 +20,11 @@ T = TypeVar("T", bound="DeliveryCourierType0")
 
 @_attrs_define
 class DeliveryCourierType0:
-    """Null until a courier is assigned, and then FROZEN: a terminal
-    delivery keeps reporting who carried it.
+    """Null until a courier is assigned. It is null again, with `status`
+    back at `dispatching`, when the courier network takes the courier
+    off before pickup, until the next courier is assigned. From pickup
+    on it is FROZEN: a terminal delivery keeps reporting who carried
+    it.
 
         Attributes:
             name (str):
